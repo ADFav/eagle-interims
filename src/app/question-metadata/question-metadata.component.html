@@ -1,0 +1,41 @@
+<h2>Question Options</h2>
+<button [ngClass]="currentQuestion.isMC ? 'selected' : 'unselected'" (click)="currentQuestion.isMC = true">Multiple Choice</button>
+<button [ngClass]="!currentQuestion.isMC ? 'selected' : 'unselected'" (click)="currentQuestion.isMC = false">Short Answer</button>
+
+<button [ngClass]="!currentQuestion.isIMG ? 'selected' : 'unselected'" (click)="currentQuestion.isIMG = false">Text-based</button>
+<button [ngClass]="currentQuestion.isIMG ? 'selected' : 'unselected'" (click)="currentQuestion.isIMG = true">Image-based</button>
+
+<div>
+  <span>Unit</span>
+  <input [(ngModel)]="currentQuestion.unit" />
+</div>
+
+<div>
+  <span>Difficulty</span>
+  <input [(ngModel)]="currentQuestion.difficulty" />
+</div>
+
+<div>
+  <span>Bloom</span>
+  <select [(ngModel)]="currentQuestion.bloom">
+    <option *ngFor="let option of bloomOptions" [value]="option">
+      {{option}}
+    </option>
+  </select>
+</div>
+
+<div>
+  <span>Regents</span>
+  <div>
+    <select [(ngModel)]="regentsMonth">
+      <option *ngFor="let month of regentsMonths" [value]="month" (change)="currentQuestion.regents = regentsYear + '-' + regentsMonth">
+        {{month}}
+      </option>
+    </select>
+    <select [(ngModel)]="regentsYear">
+      <option *ngFor="let year of regentsYears" [value]="year" (change)="currentQuestion.regents = regentsYear + '-' + regentsMonth">
+        {{year}}
+      </option>
+    </select>
+  </div>
+</div>

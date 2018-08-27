@@ -1,0 +1,11 @@
+<h2>Question Text</h2>
+<div class = "grid">
+    <label for="questionImg">
+        📷
+        <input type="file" (change)="currentQuestion.setImage($event,'questionImg')" id="questionImg" hidden="true" />
+    </label>
+    <textarea [(ngModel)]="currentQuestion.questionText"></textarea>
+    <img *ngIf="currentQuestion['questionImg']" [src]="currentQuestion['questionImg']" />
+</div>
+<app-text-mceditor *ngIf="currentQuestion.isMC" [question]="currentQuestion"></app-text-mceditor>
+<app-text-saeditor *ngIf="!currentQuestion.isMC" [question]="currentQuestion"></app-text-saeditor>

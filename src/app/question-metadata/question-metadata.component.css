@@ -1,0 +1,13 @@
+div{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+:host button{
+    width: 50%;
+}
+
+button.selected{
+    background-color: goldenrod;
+    font-weight: bold;
+}

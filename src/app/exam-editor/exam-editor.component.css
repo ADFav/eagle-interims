@@ -1,0 +1,7 @@
+div.questionPreview{
+    box-sizing: border-box;
+    border-bottom: 3px solid grey;
+    border-right: 3px solid grey;
+    margin-top: 10px;
+    border-radius: 3px;
+}

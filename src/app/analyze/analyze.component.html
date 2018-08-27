@@ -1,0 +1,12 @@
+<h2>Analysis</h2>
+<div *ngFor="let quartile of quartiles; let i = index">
+  <h2>Quartile {{1+i}}</h2>
+  <ul>
+    <li *ngFor="let student of quartile">
+      {{roster[student.id].NAME}} | {{student.data}} / {{numQuestions}} ( {{ 0.01*Round(10000*student.data/numQuestions,2) }}% )
+    </li>
+  </ul>
+</div>
+
+
+<button (click)="L()">LOGS</button>

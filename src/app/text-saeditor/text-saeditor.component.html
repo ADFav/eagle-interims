@@ -1,0 +1,11 @@
+<h2>Short Answer Model Responses</h2>
+<div *ngFor="let response of currentQuestion.modelResponses; let i = index; trackBy:trackerFn">
+  <span *ngIf="!edits[i]">{{response}}</span>
+  <input *ngIf="edits[i]" [(ngModel)]="currentQuestion.modelResponses[i]" name="response" [id]="'response' + i" />
+  <button (click)="edits[i] = !edits[i]">{{edits[i] ? '💾' : '✎'}}</button>
+  <button (click)="remove(i)">🗑️</button>
+</div>
+<div>
+  <input [(ngModel)]="newResponse" />
+  <button (click)="addResponse()">➕</button>
+</div>

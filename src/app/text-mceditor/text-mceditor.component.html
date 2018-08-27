@@ -1,0 +1,12 @@
+<h2>Multiple Choice Answers</h2>
+
+<div *ngFor=" let option of ['A','B','C','D'] ">
+  <label [for]="'answer' + option + 'img'">
+      📷
+      <input type="file" (change)="currentQuestion.setImage($event,'answer' + option + 'img')" [id]="'answer' + option + 'img'"
+        [hidden]="true" />
+  </label>
+  <textarea [(ngModel)]="currentQuestion['answer'+option]"></textarea>
+  <input type="radio" [value]="option " [(ngModel)]="currentQuestion.correctAnswer" name="answerChoice">
+  <img *ngIf="currentQuestion['answer' + option + 'img']" [src]="currentQuestion['answer' + option + 'img']" />
+</div>

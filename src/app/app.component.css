@@ -1,0 +1,13 @@
+:host{
+    display: grid;
+    grid-column: 960px;
+}
+
+textarea{
+    resize: vertical;
+}
+
+app-exam-editor{
+    width: 100%;
+    background-color:white;
+}

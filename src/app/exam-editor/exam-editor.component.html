@@ -1,0 +1,26 @@
+<!-- <button (click)="L()">Logs</button>
+<br> -->
+
+<app-exam-selector (examKey)="currentExam = $event"></app-exam-selector>
+<button (click)="getQuestions(currentExam)">Edit</button>
+
+<div *ngIf="!hidePreview">
+  <button (click)="addQuestion()">Add Question</button><br>
+  <app-student-uploader></app-student-uploader>
+</div>
+<div *ngIf="hidePreview && newQuestion">
+    <button (click)="submit(newQuestion)">Save</button>
+    <app-question-editor [question]="newQuestion.data"></app-question-editor>
+</div>
+<div *ngFor="let question of questions | async">
+  <div *ngIf="!hidePreview" class="questionPreview">
+    <button (click)="edit(question)">Edit</button>
+    <button (click)="del(question)">Delete</button>
+    <app-question-preview [question]="question"></app-question-preview>
+  </div>
+  <div *ngIf="hidePreview && question.edit">
+    <button (click)="submit(question)">Save</button>
+    <app-question-editor [question]="question.data"></app-question-editor>
+  </div>
+</div>
+

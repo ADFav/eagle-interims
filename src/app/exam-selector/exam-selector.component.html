@@ -1,0 +1,20 @@
+Select Exam:
+<select [(ngModel)]="selectedYear" (ngModelChange)="getExamSubjects()">
+    <option *ngFor="let year of yearsList | async" [value]="year">
+        {{year}}
+    </option>
+</select> ›
+<select [(ngModel)]="selectedSubject">
+    <option *ngFor="let subject of subjectsList | async" [value]="subject">
+        {{subject}}
+    </option>
+</select> ›
+<select [(ngModel)]="selectedNumber">
+    <option *ngFor="let number of numbersList | async" [value]="number">
+        {{number}}
+    </option>
+</select>
+
+<button (click)="getExamYears()">Years</button>
+<button (click)="getExamSubjects()">Subjects</button>
+<button (click)="getExamNumbers()">Numbers</button>
