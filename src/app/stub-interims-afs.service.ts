@@ -18,6 +18,4 @@ export class StubInterimsAFSService {
     })
     this.exams = of(references)
   }
-
-
 }
