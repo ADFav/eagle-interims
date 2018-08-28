@@ -56,7 +56,6 @@ export class Question {
 
 
 export interface QuestionReference {
-    id?: string;
-    edit: boolean;
+    path?: string;
     data: Question;
   }

@@ -20,6 +20,7 @@ import { QuestionPreviewComponent } from './question-preview/question-preview.co
 import { StudentUploaderComponent } from './student-uploader/student-uploader.component';
 import { ResponseComponent } from './response/response.component';
 import { AnalyzeComponent } from './analyze/analyze.component';
+import { SandboxComponent } from './sandbox/sandbox.component';
 
 const appRoutes: Routes = [
   { path: 'analysis', component: AnalyzeComponent },
@@ -40,7 +41,8 @@ const appRoutes: Routes = [
     QuestionPreviewComponent,
     StudentUploaderComponent,
     ResponseComponent,
-    AnalyzeComponent
+    AnalyzeComponent,
+    SandboxComponent
   ],
   imports: [
     BrowserModule,
