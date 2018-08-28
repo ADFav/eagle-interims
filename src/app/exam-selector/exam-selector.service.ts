@@ -3,7 +3,7 @@ import { InterimsAFSService } from '../interims-afs.service';
 import { Observable, of, Subject } from 'rxjs';
 import { StubInterimsAFSService } from '../stub-interims-afs.service';
 import { ExamReference } from '../objects/exam';
-import { LoggerService } from '../logger.service';
+import { LoggerService, StubLoggerService } from '../logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class ExamSelectorService {
 
   constructor(
     private afs: StubInterimsAFSService,
-    private logger: LoggerService
+    private logger: StubLoggerService
   ) {
     this.logger.log("Initializing Exam Selector Service");
     this.afs.exams.subscribe(exams => this.exams = exams);

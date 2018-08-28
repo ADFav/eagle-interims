@@ -1,7 +1,6 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { ExamSelectorService } from './exam-selector.service';
-import { LoggerService } from '../logger.service';
-import { StubLoggerService } from '../stub-logger.service';
+import { LoggerService, StubLoggerService } from '../logger.service';
 import { Observer, Observable } from 'rxjs';
 
 @Component({
@@ -22,7 +21,7 @@ export class ExamSelectorComponent implements OnInit {
 
   constructor(
     private selector: ExamSelectorService,
-    private logger: LoggerService
+    private logger: StubLoggerService
   ) {  }
 
   ngOnInit() {
@@ -35,7 +34,7 @@ export class ExamSelectorComponent implements OnInit {
     this.selector.examNumbers.asObservable().subscribe(interimNumbers => this.numbersList = interimNumbers);
     this.selector.selectedExamPath.asObservable().subscribe(examPath =>{ 
       this.logger.log(examPath);
-      this.examPath.emit(examPath)
+      this.examPath.emit(examPath);
     });
     this.selector.createYearsList();
   }

@@ -57,5 +57,6 @@ export class Question {
 
 export interface QuestionReference {
     path?: string;
+    edit?: boolean;
     data: Question;
   }

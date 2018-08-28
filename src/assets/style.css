@@ -1,8 +1,54 @@
-/* *{
-    color: wheat;
+
+:root{
+    --blue-yonder: #6376a8;
+    --platinum: #e5e8e8;
+    --bleu-de-france: #3993dd;
+    --black: #040303;
+    --gunmetal: #1e152a;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+
+*{
+    color: white;
     font-family: helvetica, sans-serif;
+    font-size: 14pt;
+}
+
+input, option, textarea, select{
+    color: var(--black);
+    background-color: var(--platinum);
 }
 
 html, body{
-    background-color:royalblue;
-} */
+    background-color: var(--blue-yonder);
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+app-root{
+    background-color: var(--bleu-de-france);
+    width: 1080px;
+    margin: auto;
+    height: 100%;
+    padding-bottom: auto;
+    overflow-y: scroll;
+}
+
+router-outlet{
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+button{
+    background-color: var(--blue-yonder);
+    color: var(--gunmetal);
+    font-family: arial, sans-serif;
+    font-weight: bold;
+}

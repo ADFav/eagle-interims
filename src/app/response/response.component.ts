@@ -51,7 +51,7 @@ export class ResponseComponent implements OnInit {
       this.questions.forEach(question => {
         let response: QuestionResponse = {
           examID: this.examName,
-          questionID: question.id,
+          questionID: question.path,
           studentID: student.STUDENT_ID,
           answerChoice: Array('a', 'b', 'c', 'd')[Math.floor(Math.random() * 4)]
         }

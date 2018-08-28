@@ -9,3 +9,13 @@ export class LoggerService {
 
   log = console.log;
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class StubLoggerService {
+
+  constructor() { }
+
+  log = (msg1?: any, msg2?: any, msg3?: any, msg4?: any) => null;
+}

@@ -1,47 +1,47 @@
-import { Component } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators'
+import { Component, OnInit } from '@angular/core';
 
 import { Question, QuestionReference } from '../objects/question';
+import { ExamEditorService } from './exam-editor.service';
+import { LoggerService } from '../logger.service';
 
 @Component({
   selector: 'app-exam-editor',
   templateUrl: './exam-editor.component.html',
   styleUrls: ['./exam-editor.component.css']
 })
-export class ExamEditorComponent {
-  public currentExam: string = "2SXvHc2EtCCKgRj6qwHA";
-  public questions: Observable<QuestionReference[]>;
-  public hidePreview: boolean = false;
-  private collectionRef: AngularFirestoreCollection<Question>;
+export class ExamEditorComponent implements OnInit {
+  questions: QuestionReference[];
+  hidePreview: boolean;
   newQuestion: QuestionReference;
+  currentExam: string;
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(
+    private editor: ExamEditorService,
+    private logger: LoggerService
+  ) { }
 
-  getQuestions(examID: string) {
-    this.collectionRef = this.afs.collection<Question>(["exams", examID, "questions"].join("/"));
-    this.questions = this.collectionRef
-      .snapshotChanges()
-      .pipe(map(actions => actions.map(action => ({ id: action.payload.doc.id, edit: false, data: action.payload.doc.data() }))))
+  ngOnInit() {
+    this.hidePreview = false;
+    this.editor.questions.subscribe(questions => {
+      this.logger.log("Questions coming into component: ", questions);
+      this.questions = questions
+    });
+  }
+
+  loadQuestions($event) {
+    this.editor.getQuestions($event);
+    this.currentExam = $event;
+    this.editor.examPath = $event;
   }
 
   submit(question: QuestionReference) {
-    if (question.id) {
-      this.collectionRef
-        .doc(question.id)
-        .set(question.data)
-        .then(() => this.resetPreview(question))
-    } else {
-      this.collectionRef
-        .add(Object.assign({},question.data))
-        .then(() => this.resetPreview(question))
-    }
+    this.editor.submitQuestion(question)
+    this.hidePreview = false;
   }
 
   resetPreview(question: QuestionReference) {
-    this.newQuestion = null;
     question.edit = false;
+    this.newQuestion = null;
     this.hidePreview = false;
   }
 
@@ -57,7 +57,7 @@ export class ExamEditorComponent {
 
   del(question: QuestionReference) {
     if (confirm("Delete this question?")) {
-      this.collectionRef.doc(question.id).delete();
+      this.editor.delete(question);
     }
   }
 

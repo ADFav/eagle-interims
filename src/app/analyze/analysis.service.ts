@@ -1,13 +1,26 @@
 import { Injectable } from '@angular/core';
 import { QuestionResponse } from '../objects/question-response';
+import { Subject } from 'rxjs';
+import { Student } from '../objects/student';
+import { QuestionReference } from '../objects/question';
+import { StubInterimsAFSService } from '../stub-interims-afs.service';
+import { LoggerService } from '../logger.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnalysisService {
-
-  constructor() {
-    
+  quartiles: Subject<any[]>;
+  roster: Subject<Student[]>;
+  questions: Subject<QuestionReference[]>;
+  
+  constructor(
+    private afs: StubInterimsAFSService,
+    private logger: LoggerService
+  ) {
+    this.quartiles = new Subject<any[]>();
+    this.roster = new Subject<Student[]>();
+    this.questions = new Subject<QuestionReference[]>();
    }
 
   getPercentile(data, percentile) {
@@ -49,4 +62,19 @@ export class AnalysisService {
       return obj;
     }
   }
+
+  generateStatistics(examPath: string){
+    this.afs.getQuestions(examPath);
+    this.afs.getTestTakers(examPath);
+    this.afs.getResponses(examPath);
+
+    let roster: Student[] = [];
+    let questions: QuestionReference[] = [];
+    
+    this.afs.students.subscribe(students => roster = students);
+    this.afs.questions.subscribe(qs => questions = qs);
+
+    // let studentGrades = 
+  }
+  
 }
