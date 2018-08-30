@@ -1,6 +1,6 @@
 export interface QuestionResponse {
-    questionID: string;
-    studentID: string;
+    questionPath: string;
+    studentPath: string;
     answerChoice: string;
     examID: string;
 }

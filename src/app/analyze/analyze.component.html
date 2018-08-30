@@ -1,14 +1,16 @@
 <h2>Analysis</h2>
 <app-exam-selector (examPath)="loadStats($event)"></app-exam-selector>
-<div *ngFor="let quartile of quartiles; let i = index">
+<div *ngFor="let quartile of quartiles; let i = index" [ngClass]="'q_'+(1+i)">
   <h2>Quartile {{1+i}}</h2>
-  <ul>
+  <ol>
     <li *ngFor="let student of quartile">
-      {{roster[student.id].NAME}} | {{student.data}} / {{numQuestions}} ( {{ 0.01*Round(10000*student.data/numQuestions,2) }}%
-      )
+      {{student.name}} | {{student.numberCorrect}} / {{ student.percentageCorrect }}% 
     </li>
-  </ul>
+  </ol>
 </div>
 
-
-<!-- <button (click)="L()">LOGS</button> -->
+<div class="pass_rate"></div>
+<div class="correct"></div>
+<div class="range"></div>
+<div class="projected"></div>
+<div class="standards"></div>

@@ -15,3 +15,8 @@ export interface Student {
     EXAMS: string[];
     GRADES: {};
 }
+
+export interface StudentReference{
+    path: string;
+    data: Student;
+}

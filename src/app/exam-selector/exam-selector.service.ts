@@ -18,15 +18,18 @@ export class ExamSelectorService {
 
   constructor(
     private afs: StubInterimsAFSService,
-    private logger: StubLoggerService
+    private logger: LoggerService
   ) {
     this.logger.log("Initializing Exam Selector Service");
-    this.afs.exams.subscribe(exams => this.exams = exams);
     this.examYears = new Subject<number[]>();
     this.examSubjects = new Subject<string[]>();
     this.examNumbers = new Subject<number[]>();
     this.selectedExamPath = new Subject<string>();
-    this.createYearsList()
+    this.afs.exams.subscribe(exams => {
+      this.logger.log("Exams coming in : ", exams);
+      this.exams = exams
+      this.createYearsList()
+    });
   }
 
   createYearsList() {

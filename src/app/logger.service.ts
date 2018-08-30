@@ -17,5 +17,5 @@ export class StubLoggerService {
 
   constructor() { }
 
-  log = (msg1?: any, msg2?: any, msg3?: any, msg4?: any) => null;
+  log = (...args: any[]) => null;
 }

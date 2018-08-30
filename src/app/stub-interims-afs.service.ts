@@ -3,7 +3,7 @@ import { ExamReference, Exam } from './objects/exam';
 import { Observable, of, Subject } from 'rxjs';
 import { LoggerService } from './logger.service';
 import { QuestionReference, Question } from './objects/question';
-import { Student } from './objects/student';
+import { Student, StudentReference } from './objects/student';
 import { QuestionResponse } from './objects/question-response';
 
 @Injectable({
@@ -12,26 +12,26 @@ import { QuestionResponse } from './objects/question-response';
 export class StubInterimsAFSService {
   exams: Observable<ExamReference[]>
   questions: Subject<QuestionReference[]>
-  students: Subject<Student[]>
+  students: Subject<StudentReference[]>
   responses: Subject<QuestionResponse[]>
 
   examData: Map<string, Exam>;
   questionsData: Map<string, Question>;
-  studentData: Map<number, Student>;
+  studentData: Map<string, Student>;
   responsesData: QuestionResponse[]
 
   constructor(private logger: LoggerService) {
     this.examData = new Map<string, Exam>();
     this.questionsData = new Map<string, Question>();
-    this.studentData = new Map<number, Student>();
+    this.studentData = new Map<string, Student>();
 
     this.questions = new Subject<QuestionReference[]>();
-    this.students = new Subject<Student[]>();
+    this.students = new Subject<StudentReference[]>();
     this.responses = new Subject<QuestionResponse[]>();
-    this.generateExams();
+    this._generateExams();
   }
 
-  generateExams() {
+  _generateExams() {
     let references: ExamReference[] = [];
     Array(2017, 2018, 2019).forEach((year: number) => {
       Array("A", "B", "C", "D").forEach(subject => {
@@ -45,10 +45,11 @@ export class StubInterimsAFSService {
     this.logger.log(references);
   }
 
-  generateQuestions(examPath: string) {
+  _generateQuestions(examPath: string) {
+    this.logger.log("stub-afs generating questions");
     this.questionsData = new Map<string, Question>();
     if (examPath) {
-      Array(24).fill(0).forEach((q, questionNumber) => {
+      Array(12).fill(0).forEach((q, questionNumber) => {
         let question = new Question();
         question.isMC = true;
         question.questionText = `This is question #${1 + questionNumber} of exam ${examPath}`;
@@ -62,27 +63,27 @@ export class StubInterimsAFSService {
         this.questionsData.set(`${examPath}/questions/${questionNumber}`, question)
       })
     }
-
   }
 
   getQuestions(examPath: string) {
-    this.generateQuestions(examPath);
-    this.updateQuestionsObservable();
+    this.logger.log("stub-afs getting questions");
+    this._generateQuestions(examPath);
+    this._updateQuestionsObservable();
   }
 
   submitQuestion(question: QuestionReference) {
     this.questionsData.set(question.path, question.data);
     this.logger.log("Question Updated:", this.questionsData.get(question.path))
-    this.updateQuestionsObservable();
+    this._updateQuestionsObservable();
   }
 
   newQuestion(examPath: string, question: Question) {
     let randomLetter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(Math.floor(26 * Math.random()));
     this.questionsData.set(`${examPath}/questions/${randomLetter}`, question)
-    this.updateQuestionsObservable();
+    this._updateQuestionsObservable();
   }
 
-  updateQuestionsObservable() {
+  _updateQuestionsObservable() {
     let questionRefs = []
     this.questionsData.forEach((value, key) =>
       questionRefs.push({ path: key, data: value } as QuestionReference)
@@ -93,46 +94,56 @@ export class StubInterimsAFSService {
 
   deleteQuestion(question: QuestionReference) {
     this.questionsData.delete(question.path);
-    this.updateQuestionsObservable();
+    this._updateQuestionsObservable();
   }
 
-  getTestTakers(examPath: string) {
-    this.studentData = new Map<number, Student>();
-    "ABCDEFGHIJKLMNOPQRS".split("").forEach((studentName, index) => {
+  _generateStudents() {
+    this.logger.log("stub-afs generating students");
+    this.studentData = new Map<string, Student>();
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split("").forEach((studentName, index) => {
       let student = {} as Student;
       student.NAME = studentName;
       student.STUDENT_ID = String(index);
       student.NYS_STUDENT_ID = index;
-      this.studentData.set(index, student);
+      this.studentData.set(`students/${index}`, student);
     })
-    this.updateStudentObservable();
+    this.logger.log("Here are the students", this.studentData);
+    this._updateStudentObservable();
   }
 
-  updateStudentObservable() {
+  _updateStudentObservable() {
     let studentRefs = []
-    this.studentData.forEach((value, key) =>
-      studentRefs.push(value)
+    this.studentData.forEach((student, path) =>
+      studentRefs.push({ path: path, data: student } as StudentReference)
     )
-    this.logger.log("These are the students: ", studentRefs);
     this.students.next(studentRefs)
   }
 
-  getResponses(examPath) {
-    this.responsesData = [];
-    this.questionsData.forEach((question, questionKey) => {
-      this.studentData.forEach((student, studentID) => {
-        let response = {} as QuestionResponse;
-        response.examID = examPath;
-        response.questionID = questionKey;
-        response.studentID = String(studentID);
-        response.answerChoice = Array("A", "B", "C", "D")[Math.floor(4 * Math.random())];
-        this.responsesData.push(response);
-      })
-    })
-    this.updateResponsesObservable()
+  getResponses(examPath: string) {
+    this._generateResponses(examPath, this.questionsData, this.studentData)
+    this._updateResponsesObservable()
   }
 
-  updateResponsesObservable() {
+  _generateResponses(examPath: string, questions: Map<string, Question>, students: Map<string, Student>) {
+    this.logger.log("stub-afs generating responses");
+    let result = [];
+    questions.forEach((question, questionKey) => {
+      students.forEach((student, studentID) => {
+        let response = {} as QuestionResponse;
+        response.examID = examPath;
+        response.questionPath = questionKey;
+        response.studentPath = String(studentID);
+        response.answerChoice = Array("A", "B", "C", "D")[Math.floor(4 * Math.random())];
+        result.push(response);
+      })
+    })
+    this.responsesData = result;
+  }
+  _updateResponsesObservable() {
     this.responses.next(this.responsesData)
+  }
+
+  getTestTakers(examPath: string){
+    this._generateStudents(); 
   }
 }

@@ -8,13 +8,8 @@ import { LoggerService } from '../logger.service';
   styleUrls: ['./analyze.component.css']
 })
 export class AnalyzeComponent implements OnInit {
-  questions: any;
-  roster: any;
-  studentGrades: any;
   quartiles: any[][];
-  // @Input() examID: string;
-  numQuestions: number;
-  private examID = "test-exam";
+  itemAnalysis: any;
 
   constructor(
     private analysis: AnalysisService,
@@ -22,9 +17,15 @@ export class AnalyzeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.analysis.quartiles.subscribe(quartiles => this.quartiles = quartiles);
-    this.analysis.roster.subscribe(roster => this.roster = roster);
-    this.analysis.questions.subscribe(questions => this.numQuestions = questions.length);
+    this.analysis.quartilesObservable.subscribe(quartiles => {
+      this.logger.log("analyze.component: new quartiles information coming in", quartiles)
+      this.quartiles = quartiles
+    });
+
+    this.analysis.itemAnalysisObservable.subscribe(itemAnalysis => {
+      this.logger.log("analyze.component: new item analysis information coming in", itemAnalysis)
+      this.itemAnalysis = itemAnalysis;
+    });
   }
 
   loadStats(examPath: string) {

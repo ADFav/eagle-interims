@@ -3,6 +3,7 @@ import { QuestionReference } from '../objects/question';
 import { StubInterimsAFSService } from '../stub-interims-afs.service';
 import { Observable, Subject } from 'rxjs';
 import { LoggerService } from '../logger.service';
+import { InterimsAFSService } from '../interims-afs.service';
 
 @Injectable({
   providedIn: 'root'

@@ -21,7 +21,7 @@ export class ExamSelectorComponent implements OnInit {
 
   constructor(
     private selector: ExamSelectorService,
-    private logger: StubLoggerService
+    private logger: LoggerService
   ) {  }
 
   ngOnInit() {
@@ -36,7 +36,6 @@ export class ExamSelectorComponent implements OnInit {
       this.logger.log(examPath);
       this.examPath.emit(examPath);
     });
-    this.selector.createYearsList();
   }
 
   getExamSubjects() {

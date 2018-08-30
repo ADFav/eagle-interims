@@ -1,0 +1,70 @@
+:host{
+    display: grid;
+    grid-template-areas:
+    'header header header    header'
+    'q1     q2     pass      pass'
+    'q1     q2     correct   correct'
+    'q1     q2     range     range'
+    'q1     q2     proj      proj'
+    'q3     q4     standards standards'
+    'q3     q4     standards standards'
+    'q3     q4     standards standards'
+    'q3     q4     standards standards';
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 24pt repeat(8, 1fr);
+    height: 100%;
+}
+
+h2, app-exam-selector{
+    grid-area: header;
+}
+
+.q_1{
+    grid-area: q1;
+    background-color: var(--blue-yonder);
+}
+.q_2{
+    grid-area: q2;
+    background-color: goldenrod;
+}
+.q_3{
+    grid-area: q3;
+    background-color: goldenrod;
+}
+.q_4{
+    grid-area: q4;
+    background-color: var(--blue-yonder);
+}
+
+.pass_rate{
+    grid-area: pass;
+    background-color: olive;
+}
+
+.correct{
+    grid-area: correct;
+    background-color: rgb(68, 33, 68);
+}
+
+.range{
+    grid-area: range;
+    background-color: grey;
+}
+
+.projected{
+    grid-area: proj;
+    background-color: rgb(173, 65, 25);
+}
+
+.standards{
+    grid-area: standards;
+    background-color: rgb(136, 22, 22);
+}
+
+div{
+    border: 2px solid black;
+    box-shadow: 4px 4px 8px  rgba(0,0,0,0.75);
+    overflow-y: scroll;
+}

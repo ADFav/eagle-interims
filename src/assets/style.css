@@ -24,7 +24,7 @@ input, option, textarea, select{
 }
 
 html, body{
-    background-color: var(--blue-yonder);
+    background-color: var(--gunmetal);
     margin: 0px;
     padding: 0px;
     width: 100%;

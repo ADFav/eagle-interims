@@ -30,7 +30,7 @@ export class ResponseComponent implements OnInit {
 
   submit(response: QuestionResponse = this.currentResponse) {
     return this.afs.collection<QuestionResponse>(`exams/${response.examID}/responses`)
-      .doc(`${response.studentID}.${response.questionID}`).ref;
+      .doc(`${response.studentPath}.${response.questionPath}`).ref;
   }
 
   generateQuestions(numQuestions = 24) {
@@ -51,8 +51,8 @@ export class ResponseComponent implements OnInit {
       this.questions.forEach(question => {
         let response: QuestionResponse = {
           examID: this.examName,
-          questionID: question.path,
-          studentID: student.STUDENT_ID,
+          questionPath: question.path,
+          studentPath: student.STUDENT_ID,
           answerChoice: Array('a', 'b', 'c', 'd')[Math.floor(Math.random() * 4)]
         }
         batch.set(this.submit(response),response);
