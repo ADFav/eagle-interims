@@ -19,6 +19,8 @@ export class StubInterimsAFSService {
   questionsData: Map<string, Question>;
   studentData: Map<string, Student>;
   responsesData: QuestionResponse[]
+  
+  NUMQUESTIONS: number = 48;
 
   constructor(private logger: LoggerService) {
     this.examData = new Map<string, Exam>();
@@ -49,7 +51,7 @@ export class StubInterimsAFSService {
     this.logger.log("stub-afs generating questions");
     this.questionsData = new Map<string, Question>();
     if (examPath) {
-      Array(12).fill(0).forEach((q, questionNumber) => {
+      Array(this.NUMQUESTIONS).fill(0).forEach((q, questionNumber) => {
         let question = new Question();
         question.isMC = true;
         question.questionText = `This is question #${1 + questionNumber} of exam ${examPath}`;

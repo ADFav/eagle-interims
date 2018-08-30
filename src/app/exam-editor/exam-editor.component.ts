@@ -31,11 +31,12 @@ export class ExamEditorComponent implements OnInit {
   loadQuestions($event) {
     if ($event) {
       this.logger.log("Loading in questions");
-      this.editor.getQuestions($event);
+      
       this.editor.questions.subscribe(questions => {
         this.logger.log("Questions coming into component: ", questions);
         this.questions = questions
       });
+      this.editor.getQuestions($event);
       this.currentExam = $event;
       this.editor.examPath = $event;
     }

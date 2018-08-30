@@ -36,6 +36,7 @@ export class ExamSelectorComponent implements OnInit {
       this.logger.log(examPath);
       this.examPath.emit(examPath);
     });
+    this.selector.createYearsList();
   }
 
   getExamSubjects() {

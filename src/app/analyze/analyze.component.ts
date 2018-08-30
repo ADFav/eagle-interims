@@ -10,6 +10,9 @@ import { LoggerService } from '../logger.service';
 export class AnalyzeComponent implements OnInit {
   quartiles: any[][];
   itemAnalysis: any;
+  range: string[];
+  averageCorrect: string;
+  passRate: string;
 
   constructor(
     private analysis: AnalysisService,
@@ -26,6 +29,11 @@ export class AnalyzeComponent implements OnInit {
       this.logger.log("analyze.component: new item analysis information coming in", itemAnalysis)
       this.itemAnalysis = itemAnalysis;
     });
+
+    this.analysis.passRate.subscribe(passRate => this.passRate = passRate);
+    this.analysis.averageCorrect.subscribe(averageCorrect => this.averageCorrect = averageCorrect);
+    this.analysis.range.subscribe(range => this.range = range);
+    this.range = ["0","0"];
   }
 
   loadStats(examPath: string) {

@@ -13,18 +13,26 @@ import { InterimsAFSService } from '../interims-afs.service';
 export class AnalysisService {
   quartilesObservable: Subject<any[]>;
   itemAnalysisObservable: Subject<any>;
+  passRate : Subject<string>;
+  averageCorrect: Subject<string>;
+  range: Subject<string[]>;
 
   students: Map<string, Student>;
   questions: Map<string, Question>;
   responses: QuestionResponse[];
 
   examPath: string;
+  PASSING_GRADE: number = 10;
   constructor(
     private afs: StubInterimsAFSService,
     private logger: LoggerService
   ) {
     this.quartilesObservable = new Subject<any[]>();
     this.itemAnalysisObservable = new Subject<any>();
+    this.passRate = new Subject<string>();
+    this.averageCorrect= new Subject<string>();
+    this.range = new Subject<string[]>();
+  
     this.afs.students.subscribe(students => {
       this.logger.log("New students coming in to analysis.service", students);
       this.students = students.reduce(this.arrToMap, new Map<string, Student>());
@@ -55,7 +63,7 @@ export class AnalysisService {
   splitIntoQuartiles(studentData: Map<string, number>, roster: Map<string, Student>) {
     this.logger.log("analysis.service: here are the student grades", studentData)
     let result = [[], [], [], []];
-    let grades = Array.from(studentData.values());
+    let grades = Array.from(studentData.values()).sort((a,b) => a-b);
     let q1 = this.getPercentile(grades, 25);
     let q2 = this.getPercentile(grades, 50);
     let q3 = this.getPercentile(grades, 75);
@@ -77,6 +85,10 @@ export class AnalysisService {
       }
     })
     result.map(quartile => quartile.sort((a, b) => b.numberCorrect - a.numberCorrect))
+    
+    this.passRate.next((100*grades.filter(grade => grade > this.PASSING_GRADE).length / grades.length).toFixed(2));
+    this.averageCorrect.next((grades.reduce( (a, b) => a + b, 0) / grades.length).toFixed(2));
+    this.range.next([grades[0].toFixed(0), grades[grades.length-1].toFixed(0)]);
     return result;
   }
 

@@ -33,6 +33,7 @@ export class ExamSelectorService {
   }
 
   createYearsList() {
+    this.logger.log("Creating years list");
     this.examYears.next(this.exams
       .map(examRef => examRef.data.year)
       .filter(this.onlyUnique)
