@@ -3,7 +3,7 @@
 <div *ngFor=" let option of ['A','B','C','D'] ">
   <label [for]="'answer' + option + 'img'">
       📷
-      <input type="file" (change)="currentQuestion.setImage($event,'answer' + option + 'img')" [id]="'answer' + option + 'img'"
+      <input type="file" (change)="setImage(currentQuestion,$event,'answer' + option + 'img')" [id]="'answer' + option + 'img'"
         [hidden]="true" />
   </label>
   <textarea [(ngModel)]="currentQuestion['answer'+option]"></textarea>

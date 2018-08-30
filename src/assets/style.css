@@ -23,6 +23,10 @@ input, option, textarea, select{
     background-color: var(--platinum);
 }
 
+textarea{
+    resize: vertical;
+}
+
 html, body{
     background-color: var(--gunmetal);
     margin: 0px;

@@ -13,7 +13,7 @@ export class ExamEditorService {
   questions: Subject<QuestionReference[]>;
 
   constructor(
-    private afs: StubInterimsAFSService,
+    private afs: InterimsAFSService,
     private logger: LoggerService
   ) {
     this.questions = new Subject<QuestionReference[]>();

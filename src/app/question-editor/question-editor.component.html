@@ -2,5 +2,6 @@
     <h2>Directions</h2>
     <textarea [(ngModel)] = "currentQuestion.directions"></textarea>
     <app-text-question-editor *ngIf="!currentQuestion.isIMG" [question]="currentQuestion"></app-text-question-editor>
+    <app-img-question-editor *ngIf="currentQuestion.isIMG" [question]="currentQuestion"></app-img-question-editor>
     <app-question-metadata [question]="currentQuestion"></app-question-metadata>
 </div>

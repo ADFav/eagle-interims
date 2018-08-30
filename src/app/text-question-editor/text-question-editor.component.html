@@ -2,7 +2,7 @@
 <div class = "grid">
     <label for="questionImg">
         📷
-        <input type="file" (change)="currentQuestion.setImage($event,'questionImg')" id="questionImg" hidden="true" />
+        <input type="file" (change)="setImage(currentQuestion, $event,'questionImg')" id="questionImg" hidden="true" />
     </label>
     <textarea [(ngModel)]="currentQuestion.questionText"></textarea>
     <img *ngIf="currentQuestion['questionImg']" [src]="currentQuestion['questionImg']" />

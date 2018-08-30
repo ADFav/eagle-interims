@@ -18,9 +18,9 @@ import { TextSAEditorComponent } from './text-saeditor/text-saeditor.component';
 import { QuestionMetadataComponent } from './question-metadata/question-metadata.component';
 import { QuestionPreviewComponent } from './question-preview/question-preview.component';
 import { StudentUploaderComponent } from './student-uploader/student-uploader.component';
-import { ResponseComponent } from './response/response.component';
 import { AnalyzeComponent } from './analyze/analyze.component';
 import { SandboxComponent } from './sandbox/sandbox.component';
+import { ImgQuestionEditorComponent } from './img-question-editor/img-question-editor.component';
 
 const appRoutes: Routes = [
   { path: 'analysis', component: AnalyzeComponent },
@@ -40,9 +40,9 @@ const appRoutes: Routes = [
     QuestionMetadataComponent,
     QuestionPreviewComponent,
     StudentUploaderComponent,
-    ResponseComponent,
     AnalyzeComponent,
-    SandboxComponent
+    SandboxComponent,
+    ImgQuestionEditorComponent
   ],
   imports: [
     BrowserModule,

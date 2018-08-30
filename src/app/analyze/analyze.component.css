@@ -1,18 +1,18 @@
 :host{
     display: grid;
     grid-template-areas:
-    'header header header    header'
-    'q1     q2     pass      pass'
-    'q1     q2     correct   correct'
-    'q1     q2     range     range'
-    'q1     q2     proj      proj'
-    'q3     q4     standards standards'
-    'q3     q4     standards standards'
-    'q3     q4     standards standards'
-    'q3     q4     standards standards';
+    ' header header header    '
+    ' q1     q2     pass      '
+    ' q1     q2     correct   '
+    ' q1     q2     range     '
+    ' q1     q2     proj      '
+    ' q3     q4     standards '
+    ' q3     q4     standards '
+    ' q3     q4     standards '
+    ' q3     q4     standards ';
     grid-column-gap: 10px;
     grid-row-gap: 10px;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 24pt repeat(8, 1fr);
     height: 100%;
 }

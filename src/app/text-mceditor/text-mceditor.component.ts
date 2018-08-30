@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Question } from '../objects/question';
+import { QuestionEditorService } from '../question-editor/question-editor.service';
 
 @Component({
   selector: 'app-text-mceditor',
@@ -10,9 +11,10 @@ import { Question } from '../objects/question';
 export class TextMCEditorComponent implements OnInit {
 
   @Input('question') currentQuestion: Question;
-  constructor() { }
+  constructor(private qs: QuestionEditorService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {  }
+
+  setImage = this.qs.setImage;
 
 }

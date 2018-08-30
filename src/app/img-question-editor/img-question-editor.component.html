@@ -1,0 +1,6 @@
+<label for="questionImage">
+  📷
+  <input type="file" (change)="setImage(currentQuestion,$event,'image')" id="questionImage"
+    [hidden]="true" />
+</label>
+<img *ngIf="currentQuestion.image" [src]="currentQuestion.image" />

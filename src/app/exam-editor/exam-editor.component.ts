@@ -31,11 +31,6 @@ export class ExamEditorComponent implements OnInit {
   loadQuestions($event) {
     if ($event) {
       this.logger.log("Loading in questions");
-      
-      this.editor.questions.subscribe(questions => {
-        this.logger.log("Questions coming into component: ", questions);
-        this.questions = questions
-      });
       this.editor.getQuestions($event);
       this.currentExam = $event;
       this.editor.examPath = $event;
@@ -44,7 +39,7 @@ export class ExamEditorComponent implements OnInit {
 
   submit(question: QuestionReference) {
     this.editor.submitQuestion(question)
-    this.hidePreview = false;
+    this.resetPreview(question);
   }
 
   resetPreview(question: QuestionReference) {
@@ -54,7 +49,7 @@ export class ExamEditorComponent implements OnInit {
   }
 
   addQuestion() {
-    this.newQuestion = { edit: true, data: new Question(this.currentExam) } as QuestionReference;
+    this.newQuestion = { edit: true, data:{} as Question} as QuestionReference;
     this.hidePreview = true;
   }
 

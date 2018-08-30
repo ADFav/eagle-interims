@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { QuestionEditorService } from '../question-editor.service';
+import { QuestionEditorService } from './question-editor.service';
 import { Question } from "../objects/question";
 
 @Component({

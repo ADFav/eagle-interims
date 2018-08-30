@@ -52,7 +52,7 @@ export class StubInterimsAFSService {
     this.questionsData = new Map<string, Question>();
     if (examPath) {
       Array(this.NUMQUESTIONS).fill(0).forEach((q, questionNumber) => {
-        let question = new Question();
+        let question = {} as Question;
         question.isMC = true;
         question.questionText = `This is question #${1 + questionNumber} of exam ${examPath}`;
         Array("A", "B", "C", "D").forEach(answerChoice =>

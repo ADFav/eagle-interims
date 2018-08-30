@@ -17,7 +17,7 @@ export class ExamSelectorService {
   selectedExamPath: Subject<string>;
 
   constructor(
-    private afs: StubInterimsAFSService,
+    private afs: InterimsAFSService,
     private logger: LoggerService
   ) {
     this.logger.log("Initializing Exam Selector Service");

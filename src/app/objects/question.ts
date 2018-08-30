@@ -1,46 +1,44 @@
-export class Question {
-    public isMC = true;
-    public isIMG = false;
-    public directions?: string;
+export interface Question {
+    isMC: boolean;
+    isIMG: boolean;
+    directions?: string;
 
     // metadata
-    public unit?: string;
-    public bloom?: string;
-    public standards?: string[] = [];
-    public difficulty?: string;
-    public regents?: string;
+    unit?: string;
+    bloom?: string;
+    standards?: string[];
+    difficulty?: string;
+    regents?: string;
 
     // text-based question
-    public questionText?: string;
-    public questionImg?: string;
+    questionText?: string;
+    questionImg?: string;
 
     // MC-text-based question
-    public answerA?: string;
-    public answerB?: string;
-    public answerC?: string;
-    public answerD?: string;
+    answerA?: string;
+    answerB?: string;
+    answerC?: string;
+    answerD?: string;
 
-    public answerAImg?: string;
-    public answerBImg?: string;
-    public answerCImg?: string;
-    public answerDImg?: string;
+    answerAImg?: string;
+    answerBImg?: string;
+    answerCImg?: string;
+    answerDImg?: string;
 
     // SA-text-based question
-    public modelResponses?: string[] = [];
+    modelResponses?: string[];
 
-    public correctAnswer?: string;
+    correctAnswer?: string;
 
     // image-based question
-    public image?: string;
+    image?: string;
 
     // MC-image-based question
-    public boundingBoxA?: number[] = [];
-    public boundingBoxB?: number[] = [];
-    public boundingBoxC?: number[] = [];
-    public boundingBoxD?: number[] = [];
-    constructor(
-        public exam?: string
-    ) {    }
+    boundingBoxA?: number[];
+    boundingBoxB?: number[] ;
+    boundingBoxC?: number[] ;
+    boundingBoxD?: number[] ;
+
 
     // setImage(event, key) {
     //     this.getBase64(event.target.files[0], this, key);
@@ -59,4 +57,4 @@ export interface QuestionReference {
     path?: string;
     edit?: boolean;
     data: Question;
-  }
+}

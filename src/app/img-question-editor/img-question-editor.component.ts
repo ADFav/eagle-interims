@@ -1,21 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
-
 import { Question } from '../objects/question';
 import { QuestionEditorService } from '../question-editor/question-editor.service';
 
 @Component({
-  selector: 'app-text-question-editor',
-  templateUrl: './text-question-editor.component.html',
-  styleUrls: ['./text-question-editor.component.css']
+  selector: 'app-img-question-editor',
+  templateUrl: './img-question-editor.component.html',
+  styleUrls: ['./img-question-editor.component.css']
 })
-export class TextQuestionEditorComponent implements OnInit {
+export class ImgQuestionEditorComponent implements OnInit {
   @Input('question') currentQuestion: Question;
   constructor(
     private qs: QuestionEditorService
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {  }
 
   setImage = this.qs.setImage
 
