@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ExamReference, Exam } from './objects/exam';
+
 import { Observable, of, Subject } from 'rxjs';
 import { LoggerService } from './logger.service';
-import { QuestionReference, Question } from './objects/question';
-import { Student, StudentReference } from './objects/student';
-import { QuestionResponse } from './objects/question-response';
+import { ExamReference, Exam } from 'src/app/models/exam';
+import { QuestionReference, Question } from 'src/app/models/question';
+import { StudentReference, Student } from 'src/app/models/student';
+import { QuestionResponse } from 'src/app/models/question-response';
+
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +22,7 @@ export class StubInterimsAFSService {
   studentData: Map<string, Student>;
   responsesData: QuestionResponse[]
   
-  NUMQUESTIONS: number = 48;
+  NUMQUESTIONS: number = 24;
 
   constructor(private logger: LoggerService) {
     this.examData = new Map<string, Exam>();

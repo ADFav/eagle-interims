@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Question } from 'src/app/models/question';
+import { QuestionEditorService } from '../../question-editor.service';
 
-import { Question } from '../objects/question';
-import { QuestionEditorService } from '../question-editor/question-editor.service';
 
 @Component({
   selector: 'app-text-mceditor',

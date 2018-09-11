@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Question } from 'src/app/models/question';
 
-import { Question } from '../objects/question';
+
 
 @Component({
   selector: 'app-question-metadata',

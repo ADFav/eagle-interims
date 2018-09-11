@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { QuestionResponse } from '../objects/question-response';
-import { Subject, generate } from 'rxjs';
-import { Student } from '../objects/student';
-import { QuestionReference, Question } from '../objects/question';
 import { StubInterimsAFSService } from '../stub-interims-afs.service';
 import { LoggerService } from '../logger.service';
 import { InterimsAFSService } from '../interims-afs.service';
+import { Subject } from 'rxjs';
+import { Student } from '../models/student';
+import { Question } from '../models/question';
+import { QuestionResponse } from '../models/question-response';
 
 @Injectable({
   providedIn: 'root'

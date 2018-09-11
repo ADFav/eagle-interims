@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { QuestionReference } from '../objects/question';
+import { QuestionReference } from 'src/app/models/question';
 import { StubInterimsAFSService } from '../stub-interims-afs.service';
 import { Observable, Subject } from 'rxjs';
 import { LoggerService } from '../logger.service';

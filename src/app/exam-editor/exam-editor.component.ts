@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Question, QuestionReference } from '../objects/question';
 import { ExamEditorService } from './exam-editor.service';
 import { LoggerService } from '../logger.service';
+import { Question, QuestionReference } from 'src/app/models/question';
 
 @Component({
   selector: 'app-exam-editor',

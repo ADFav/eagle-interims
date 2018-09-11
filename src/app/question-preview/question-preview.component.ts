@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { QuestionReference } from 'src/app/models/question';
 
-import { QuestionReference } from '../objects/question';
+
 
 @Component({
   selector: 'app-question-preview',

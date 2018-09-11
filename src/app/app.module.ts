@@ -8,19 +8,20 @@ import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment'
 
 import { AppComponent } from './app.component';
-import { QuestionEditorComponent } from './question-editor/question-editor.component';
+import { QuestionEditorComponent } from 'src/app/exam-editor/question-editor/question-editor.component';
 import { ExamEditorComponent } from './exam-editor/exam-editor.component';
-import { StudentEditorComponent } from './student-editor/student-editor.component';
-import { ExamSelectorComponent } from './exam-selector/exam-selector.component';
-import { TextMCEditorComponent } from './text-mceditor/text-mceditor.component';
-import { TextQuestionEditorComponent } from './text-question-editor/text-question-editor.component';
-import { TextSAEditorComponent } from './text-saeditor/text-saeditor.component';
-import { QuestionMetadataComponent } from './question-metadata/question-metadata.component';
-import { QuestionPreviewComponent } from './question-preview/question-preview.component';
-import { StudentUploaderComponent } from './student-uploader/student-uploader.component';
-import { AnalyzeComponent } from './analyze/analyze.component';
-import { SandboxComponent } from './sandbox/sandbox.component';
-import { ImgQuestionEditorComponent } from './img-question-editor/img-question-editor.component';
+import { StudentEditorComponent } from 'src/app/student-editor/student-editor.component';
+import { ExamSelectorComponent } from 'src/app/exam-selector/exam-selector.component';
+import { QuestionPreviewComponent } from 'src/app/question-preview/question-preview.component';
+import { StudentUploaderComponent } from 'src/app/student-uploader/student-uploader.component';
+import { AnalyzeComponent } from 'src/app/analyze/analyze.component';
+import { SandboxComponent } from 'src/app/sandbox/sandbox.component';
+import { TextMCEditorComponent } from 'src/app/exam-editor/question-editor/text-question-editor/text-mceditor/text-mceditor.component';
+import { TextQuestionEditorComponent } from 'src/app/exam-editor/question-editor/text-question-editor/text-question-editor.component';
+import { TextSAEditorComponent } from 'src/app/exam-editor/question-editor/text-question-editor/text-saeditor/text-saeditor.component';
+import { QuestionMetadataComponent } from 'src/app/exam-editor/question-editor/question-metadata/question-metadata.component';
+import { ImgQuestionEditorComponent } from 'src/app/exam-editor/question-editor/img-question-editor/img-question-editor.component';
+import { TakeComponent } from './take/take.component';
 
 const appRoutes: Routes = [
   { path: 'analysis', component: AnalyzeComponent },
@@ -42,7 +43,8 @@ const appRoutes: Routes = [
     StudentUploaderComponent,
     AnalyzeComponent,
     SandboxComponent,
-    ImgQuestionEditorComponent
+    ImgQuestionEditorComponent,
+    TakeComponent
   ],
   imports: [
     BrowserModule,

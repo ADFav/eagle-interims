@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Student } from '../objects/student';
+import { Student } from 'src/app/models/student';
+
 
 @Component({
   selector: 'app-student-uploader',
@@ -15,7 +16,7 @@ export class StudentUploaderComponent {
   uploadCSV(evt) {
     const reader = new FileReader();
     reader.readAsText(evt.target.files[0]);
-    reader.onload = (event: Event & { target: { result: string } }) => {
+    reader.onload = (event: Event) => {
       this.extractData(event.target.result)
     }
   }

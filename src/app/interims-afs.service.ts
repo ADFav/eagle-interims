@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, QueryFn, } from 'angularfire2/firestore';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Exam, ExamReference } from './objects/exam';
-import { Question, QuestionReference } from './objects/question';
-import { Student, StudentReference } from './objects/student';
-import { QuestionResponse } from './objects/question-response';
+
 import { LoggerService } from './logger.service';
+import { ExamReference, Exam } from './models/exam';
+import { QuestionReference, Question } from './models/question';
+import { StudentReference, Student } from './models/student';
+import { QuestionResponse } from './models/question-response';
 
 @Injectable({
   providedIn: 'root'

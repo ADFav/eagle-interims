@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { QuestionEditorService } from './question-editor.service';
-import { Question } from "../objects/question";
+import { Question } from 'src/app/models/question';
+
 
 @Component({
   selector: 'app-question-editor',

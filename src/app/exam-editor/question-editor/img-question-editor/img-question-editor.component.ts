@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Question } from '../objects/question';
-import { QuestionEditorService } from '../question-editor/question-editor.service';
+import { Question } from 'src/app/models/question';
+import { QuestionEditorService } from 'src/app/exam-editor/question-editor/question-editor.service';
 
 @Component({
   selector: 'app-img-question-editor',

@@ -2,8 +2,8 @@ import { Injectable, Testability } from '@angular/core';
 import { InterimsAFSService } from '../interims-afs.service';
 import { Observable, of, Subject } from 'rxjs';
 import { StubInterimsAFSService } from '../stub-interims-afs.service';
-import { ExamReference } from '../objects/exam';
 import { LoggerService, StubLoggerService } from '../logger.service';
+import { ExamReference } from 'src/app/models/exam';
 
 @Injectable({
   providedIn: 'root'

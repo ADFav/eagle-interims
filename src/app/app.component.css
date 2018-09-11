@@ -1,13 +1,13 @@
 :host{
     display: grid;
-    grid-column: 960px;
+    margin: auto;
+    width: 1080px;
+    height: 100%;
+    padding: 0px;
+    overflow-y: scroll;
 }
 
 textarea{
     resize: vertical;
 }
 
-app-exam-editor{
-    width: 100%;
-    background-color:white;
-}

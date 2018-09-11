@@ -5,3 +5,10 @@ div.questionPreview{
     margin-top: 10px;
     border-radius: 3px;
 }
+
+:host{
+    height: 100%;
+    overflow-y: scroll;
+    padding: 0px;
+    margin: 0px;
+}

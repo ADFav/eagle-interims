@@ -10,15 +10,18 @@
     ' q3     q4     standards '
     ' q3     q4     standards '
     ' q3     q4     standards ';
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 24pt repeat(8, 1fr);
     height: 100%;
+    padding: 5px;
 }
 
 h2, app-exam-selector{
     grid-area: header;
+}
+
+h2{
+    text-align: center;
 }
 
 .q_1{
@@ -63,8 +66,14 @@ h2, app-exam-selector{
     background-color: rgb(136, 22, 22);
 }
 
-div{
+:host > div{
     border: 2px solid black;
     box-shadow: 4px 4px 8px  rgba(0,0,0,0.75);
     overflow-y: scroll;
+    margin: 5px;
+}
+
+li > div{
+    display: grid;
+    grid-template-columns: 5fr 1fr 2fr;
 }
