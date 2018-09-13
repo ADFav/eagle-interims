@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
-import { QuestionReference } from 'src/app/models/question';
+import { Question } from 'src/app/models/question';
 import { StubInterimsAFSService } from '../stub-interims-afs.service';
 import { Observable, Subject } from 'rxjs';
 import { LoggerService } from '../logger.service';
 import { InterimsAFSService } from '../interims-afs.service';
+import { FirestoreReference } from 'src/app/models/firestore-reference';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExamEditorService {
   examPath: string;
-  questions: Subject<QuestionReference[]>;
+  questions: Subject<FirestoreReference<Question>[]>;
 
   constructor(
     private afs: InterimsAFSService,
     private logger: LoggerService
   ) {
-    this.questions = new Subject<QuestionReference[]>();
+    this.questions = new Subject<FirestoreReference<Question>[]>();
     this.afs.questions.subscribe(questions => {
       this.logger.log("Questions coming in: ", questions);
       this.questions.next(questions)
@@ -27,7 +28,7 @@ export class ExamEditorService {
     this.afs.getQuestions(examPath);
   }
 
-  submitQuestion(question: QuestionReference) {
+  submitQuestion(question: FirestoreReference<Question>) {
     if (question.path) {
       this.afs.submitQuestion(question);
     } else {
@@ -35,7 +36,7 @@ export class ExamEditorService {
     }
   }
 
-  delete(question: QuestionReference){
+  delete(question: FirestoreReference<Question>){
     this.afs.deleteQuestion(question);
   }
 }

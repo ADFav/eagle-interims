@@ -5,8 +5,3 @@ export class Exam {
         public interimNumber: number
     ){    }
 }
-
-export interface ExamReference{
-    path?: string
-    data: Exam
-}

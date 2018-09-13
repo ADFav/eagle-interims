@@ -16,9 +16,9 @@ export class StudentUploaderComponent {
   uploadCSV(evt) {
     const reader = new FileReader();
     reader.readAsText(evt.target.files[0]);
-    reader.onload = (event: Event) => {
-      this.extractData(event.target.result)
-    }
+    // reader.onload = (event: Event) => {
+    //   this.extractData(event.target.result)
+    // }
   }
 
   extractData(data) {

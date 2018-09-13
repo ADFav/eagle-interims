@@ -1,16 +1,17 @@
 import { Injectable, Testability } from '@angular/core';
 import { InterimsAFSService } from '../interims-afs.service';
-import { Observable, of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { StubInterimsAFSService } from '../stub-interims-afs.service';
 import { LoggerService, StubLoggerService } from '../logger.service';
-import { ExamReference } from 'src/app/models/exam';
+import { Exam } from 'src/app/models/exam';
+import { FirestoreReference } from 'src/app/models/firestore-reference';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExamSelectorService {
 
-  exams: ExamReference[]
+  exams: FirestoreReference<Exam>[]
   examYears: Subject<number[]>;
   examSubjects: Subject<string[]>;
   examNumbers: Subject<number[]>;

@@ -4,18 +4,19 @@ import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { LoggerService } from './logger.service';
-import { ExamReference, Exam } from './models/exam';
-import { QuestionReference, Question } from './models/question';
-import { StudentReference, Student } from './models/student';
+import { Exam } from './models/exam';
+import { Question } from './models/question';
+import { Student } from './models/student';
 import { QuestionResponse } from './models/question-response';
+import { FirestoreReference } from 'src/app/models/firestore-reference';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InterimsAFSService {
-  exams: Observable<ExamReference[]>;
-  questions: Subject<QuestionReference[]>;
-  students: Subject<StudentReference[]>;
+  exams: Observable<FirestoreReference<Exam>[]>;
+  questions: Subject<FirestoreReference<Question>[]>;
+  students: Subject<FirestoreReference<Student>[]>;
   responses: Subject<QuestionResponse[]>;
 
   constructor(
@@ -23,8 +24,8 @@ export class InterimsAFSService {
     private logger: LoggerService
   ) {
     this.exams = this.createReferences(this.afs.collection<Exam>("exams"))
-    this.questions = new Subject<QuestionReference[]>();
-    this.students = new Subject<StudentReference[]>();
+    this.questions = new Subject<FirestoreReference<Question>[]>();
+    this.students = new Subject<FirestoreReference<Student>[]>();
     this.responses = new Subject<QuestionResponse[]>();
   }
 
@@ -38,7 +39,7 @@ export class InterimsAFSService {
     return result;
   }
 
-  deleteQuestion(question: QuestionReference) {
+  deleteQuestion(question: FirestoreReference<Question>) {
     this.afs.doc(question.path).delete();
   }
 
@@ -46,7 +47,7 @@ export class InterimsAFSService {
     this.afs.doc(examPath).collection("questions").add(question)
   }
 
-  submitQuestion(question: QuestionReference) {
+  submitQuestion(question: FirestoreReference<Question>) {
     this.afs.doc(question.path).set(question.data);
   }
 

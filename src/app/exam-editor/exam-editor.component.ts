@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
 import { ExamEditorService } from './exam-editor.service';
 import { LoggerService } from '../logger.service';
-import { Question, QuestionReference } from 'src/app/models/question';
+import { Question } from 'src/app/models/question';
+import { FirestoreReference } from 'src/app/models/firestore-reference';
 
 @Component({
   selector: 'app-exam-editor',
@@ -10,9 +10,9 @@ import { Question, QuestionReference } from 'src/app/models/question';
   styleUrls: ['./exam-editor.component.css']
 })
 export class ExamEditorComponent implements OnInit {
-  questions: QuestionReference[];
+  questions: FirestoreReference<Question>[];
   hidePreview: boolean;
-  newQuestion: QuestionReference;
+  newQuestion: FirestoreReference<Question>;
   currentExam: string;
 
   constructor(
@@ -37,28 +37,28 @@ export class ExamEditorComponent implements OnInit {
     }
   }
 
-  submit(question: QuestionReference) {
+  submit(question: FirestoreReference<Question>) {
     this.editor.submitQuestion(question)
     this.resetPreview(question);
   }
 
-  resetPreview(question: QuestionReference) {
+  resetPreview(question: FirestoreReference<Question>) {
     question.edit = false;
     this.newQuestion = null;
     this.hidePreview = false;
   }
 
   addQuestion() {
-    this.newQuestion = { edit: true, data:{} as Question} as QuestionReference;
+    this.newQuestion = { edit: true, data:{} as Question} as FirestoreReference<Question>;
     this.hidePreview = true;
   }
 
-  edit(question: QuestionReference) {
+  edit(question: FirestoreReference<Question>) {
     question.edit = true;
     this.hidePreview = true;
   }
 
-  del(question: QuestionReference) {
+  del(question: FirestoreReference<Question>) {
     if (confirm("Delete this question?")) {
       this.editor.delete(question);
     }

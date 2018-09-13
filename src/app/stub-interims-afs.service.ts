@@ -2,45 +2,46 @@ import { Injectable } from '@angular/core';
 
 import { Observable, of, Subject } from 'rxjs';
 import { LoggerService } from './logger.service';
-import { ExamReference, Exam } from 'src/app/models/exam';
-import { QuestionReference, Question } from 'src/app/models/question';
-import { StudentReference, Student } from 'src/app/models/student';
+import { Exam } from 'src/app/models/exam';
+import { Question } from 'src/app/models/question';
+import { Student } from 'src/app/models/student';
 import { QuestionResponse } from 'src/app/models/question-response';
+import { FirestoreReference } from 'src/app/models/firestore-reference';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class StubInterimsAFSService {
-  exams: Observable<ExamReference[]>
-  questions: Subject<QuestionReference[]>
-  students: Subject<StudentReference[]>
+  exams: Observable<FirestoreReference<Exam>[]>
+  questions: Subject<FirestoreReference<Question>[]>
+  students: Subject<FirestoreReference<Student>[]>
   responses: Subject<QuestionResponse[]>
 
-  examData: Map<string, Exam>;
-  questionsData: Map<string, Question>;
-  studentData: Map<string, Student>;
-  responsesData: QuestionResponse[]
+  private examData: Map<string, Exam>;
+  private questionsData: Map<string, Question>;
+  private studentData: Map<string, Student>;
+  private responsesData: QuestionResponse[]
   
-  NUMQUESTIONS: number = 24;
+  private NUMQUESTIONS: number = 24;
 
   constructor(private logger: LoggerService) {
     this.examData = new Map<string, Exam>();
     this.questionsData = new Map<string, Question>();
     this.studentData = new Map<string, Student>();
 
-    this.questions = new Subject<QuestionReference[]>();
-    this.students = new Subject<StudentReference[]>();
+    this.questions = new Subject<FirestoreReference<Question>[]>();
+    this.students = new Subject<FirestoreReference<Student>[]>();
     this.responses = new Subject<QuestionResponse[]>();
     this._generateExams();
   }
 
-  _generateExams() {
-    let references: ExamReference[] = [];
+  private _generateExams() {
+    let references: FirestoreReference<Exam>[] = [];
     Array(2017, 2018, 2019).forEach((year: number) => {
       Array("A", "B", "C", "D").forEach(subject => {
         Array(1, 2, 3).forEach(number => {
-          references.push({ path: `exams/${year}.${subject}.${number}`, data: new Exam(year, subject, number) } as ExamReference)
+          references.push({ path: `exams/${year}.${subject}.${number}`, data: new Exam(year, subject, number) })
           this.examData.set(`exams/${year}.${subject}.${number}`, new Exam(year, subject, number))
         })
       })
@@ -49,7 +50,7 @@ export class StubInterimsAFSService {
     this.logger.log(references);
   }
 
-  _generateQuestions(examPath: string) {
+  private _generateQuestions(examPath: string) {
     this.logger.log("stub-afs generating questions");
     this.questionsData = new Map<string, Question>();
     if (examPath) {
@@ -75,7 +76,7 @@ export class StubInterimsAFSService {
     this._updateQuestionsObservable();
   }
 
-  submitQuestion(question: QuestionReference) {
+  submitQuestion(question: FirestoreReference<Question>) {
     this.questionsData.set(question.path, question.data);
     this.logger.log("Question Updated:", this.questionsData.get(question.path))
     this._updateQuestionsObservable();
@@ -87,21 +88,21 @@ export class StubInterimsAFSService {
     this._updateQuestionsObservable();
   }
 
-  _updateQuestionsObservable() {
+  private _updateQuestionsObservable() {
     let questionRefs = []
     this.questionsData.forEach((value, key) =>
-      questionRefs.push({ path: key, data: value } as QuestionReference)
+      questionRefs.push({ path: key, data: value })
     )
     this.logger.log("These are the questions: ", questionRefs);
     this.questions.next(questionRefs)
   }
 
-  deleteQuestion(question: QuestionReference) {
+  deleteQuestion(question: FirestoreReference<Question>) {
     this.questionsData.delete(question.path);
     this._updateQuestionsObservable();
   }
 
-  _generateStudents() {
+  private _generateStudents() {
     this.logger.log("stub-afs generating students");
     this.studentData = new Map<string, Student>();
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split("").forEach((studentName, index) => {
@@ -115,10 +116,10 @@ export class StubInterimsAFSService {
     this._updateStudentObservable();
   }
 
-  _updateStudentObservable() {
+  private _updateStudentObservable() {
     let studentRefs = []
     this.studentData.forEach((student, path) =>
-      studentRefs.push({ path: path, data: student } as StudentReference)
+      studentRefs.push({ path: path, data: student })
     )
     this.students.next(studentRefs)
   }
@@ -128,7 +129,7 @@ export class StubInterimsAFSService {
     this._updateResponsesObservable()
   }
 
-  _generateResponses(examPath: string, questions: Map<string, Question>, students: Map<string, Student>) {
+  private _generateResponses(examPath: string, questions: Map<string, Question>, students: Map<string, Student>) {
     this.logger.log("stub-afs generating responses");
     let result = [];
     questions.forEach((question, questionKey) => {
@@ -143,11 +144,18 @@ export class StubInterimsAFSService {
     })
     this.responsesData = result;
   }
-  _updateResponsesObservable() {
+  private _updateResponsesObservable() {
     this.responses.next(this.responsesData)
   }
 
   getTestTakers(examPath: string){
     this._generateStudents(); 
+  }
+
+  getStudent(studentID: string): Student {
+    const result = {} as Student;
+    result.STUDENT_ID = studentID;
+    result.NAME = "FAKE NAME";
+    return result;
   }
 }

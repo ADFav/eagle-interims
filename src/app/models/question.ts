@@ -51,10 +51,3 @@ export interface Question {
     //     reader.onerror = () => obj[key] = '';
     // }
 }
-
-
-export interface QuestionReference {
-    path?: string;
-    edit?: boolean;
-    data: Question;
-}

@@ -139,7 +139,7 @@ export class AnalysisService {
         )
         aggregator.get(response.questionPath).set("Correct",questions.get(response.questionPath).correctAnswer)
       }
-      let oldNumber = aggregator.get(response.questionPath).get(response.answerChoice);
+      const oldNumber = aggregator.get(response.questionPath).get(response.answerChoice);
       aggregator.get(response.questionPath).set(response.answerChoice, oldNumber + 1)
       return aggregator;
     }

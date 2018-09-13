@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireModule } from 'angularfire2';
@@ -22,8 +21,11 @@ import { TextSAEditorComponent } from 'src/app/exam-editor/question-editor/text-
 import { QuestionMetadataComponent } from 'src/app/exam-editor/question-editor/question-metadata/question-metadata.component';
 import { ImgQuestionEditorComponent } from 'src/app/exam-editor/question-editor/img-question-editor/img-question-editor.component';
 import { TakeComponent } from './take/take.component';
+import { TakeQuestionComponent } from './take/take-question/take-question.component';
+import { QuestionSelectorComponent } from './take/question-selector/question-selector.component';
 
 const appRoutes: Routes = [
+  { path: 'take', component: TakeComponent },
   { path: 'analysis', component: AnalyzeComponent },
   { path: '', component: ExamEditorComponent }
 ];
@@ -44,13 +46,14 @@ const appRoutes: Routes = [
     AnalyzeComponent,
     SandboxComponent,
     ImgQuestionEditorComponent,
-    TakeComponent
+    TakeComponent,
+    TakeQuestionComponent,
+    QuestionSelectorComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    HttpClientModule,
     FormsModule,
     RouterModule.forRoot(
       appRoutes,

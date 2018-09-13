@@ -1,0 +1,6 @@
+<ol *ngIf="questionRefs">
+  <li *ngFor="let question of questionRefs" (click)="select(question)">
+    <span *ngIf="!question.data.isIMG">{{question.data.questionText}}</span>
+    <img *ngIf="question.data.isIMG" [src]="question.data.image" />
+  </li>
+</ol>

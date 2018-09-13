@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { QuestionReference } from 'src/app/models/question';
+import { Question } from 'src/app/models/question';
+import { FirestoreReference } from 'src/app/models/firestore-reference';
 
 
 
@@ -10,7 +11,7 @@ import { QuestionReference } from 'src/app/models/question';
 })
 export class QuestionPreviewComponent implements OnInit {
 
-  @Input() question: QuestionReference; 
+  @Input() question: FirestoreReference<Question>; 
   constructor() { }
 
   ngOnInit() {
