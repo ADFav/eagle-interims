@@ -39,7 +39,7 @@ export class AnalyzeComponent implements OnInit {
   loadStats(examPath: string) {
     if (examPath) {
       this.logger.log("Generating Statistics");
-      this.analysis.generateStatistics(examPath);
+      this.analysis.initData(examPath);
     }
   }
 

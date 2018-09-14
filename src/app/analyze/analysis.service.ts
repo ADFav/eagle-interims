@@ -13,7 +13,7 @@ import { QuestionResponse } from '../models/question-response';
 export class AnalysisService {
   quartilesObservable: Subject<any[]>;
   itemAnalysisObservable: Subject<any>;
-  passRate : Subject<string>;
+  passRate: Subject<string>;
   averageCorrect: Subject<string>;
   range: Subject<string[]>;
 
@@ -30,23 +30,23 @@ export class AnalysisService {
     this.quartilesObservable = new Subject<any[]>();
     this.itemAnalysisObservable = new Subject<any>();
     this.passRate = new Subject<string>();
-    this.averageCorrect= new Subject<string>();
+    this.averageCorrect = new Subject<string>();
     this.range = new Subject<string[]>();
-  
+
     this.afs.students.subscribe(students => {
       this.logger.log("New students coming in to analysis.service", students);
       this.students = students.reduce(this.arrToMap, new Map<string, Student>());
-      // this.generateStatistics();
+      this.generateStatistics();
     });
     this.afs.questions.subscribe(questions => {
       this.logger.log("New questions coming in to analysis.service", questions)
       this.questions = questions.reduce(this.arrToMap, new Map<string, Question>())
-      // this.generateStatistics();
+      this.generateStatistics();
     });
     this.afs.responses.subscribe(responses => {
       this.logger.log("New responses coming in to analysis.service", responses);
       this.responses = responses
-      // this.generateStatistics();
+      this.generateStatistics();
     });
   }
 
@@ -63,7 +63,7 @@ export class AnalysisService {
   splitIntoQuartiles(studentData: Map<string, number>, roster: Map<string, Student>) {
     this.logger.log("analysis.service: here are the student grades", studentData)
     let result = [[], [], [], []];
-    let grades = Array.from(studentData.values()).sort((a,b) => a-b);
+    let grades = Array.from(studentData.values()).sort((a, b) => a - b);
     let q1 = this.getPercentile(grades, 25);
     let q2 = this.getPercentile(grades, 50);
     let q3 = this.getPercentile(grades, 75);
@@ -85,10 +85,10 @@ export class AnalysisService {
       }
     })
     result.map(quartile => quartile.sort((a, b) => b.numberCorrect - a.numberCorrect))
-    
-    this.passRate.next((100*grades.filter(grade => grade > this.PASSING_GRADE).length / grades.length).toFixed(2));
-    this.averageCorrect.next((grades.reduce( (a, b) => a + b, 0) / grades.length).toFixed(2));
-    this.range.next([grades[0].toFixed(0), grades[grades.length-1].toFixed(0)]);
+
+    this.passRate.next((100 * grades.filter(grade => grade > this.PASSING_GRADE).length / grades.length).toFixed(2));
+    this.averageCorrect.next((grades.reduce((a, b) => a + b, 0) / grades.length).toFixed(2));
+    this.range.next([grades[0].toFixed(0), grades[grades.length - 1].toFixed(0)]);
     return result;
   }
 
@@ -107,7 +107,7 @@ export class AnalysisService {
     }
   }
 
-  generateStatistics(examPath?: string) {
+  initData(examPath?: string) {
     this.logger.log("Service: beginning statistics calculation");
     if (examPath) {
       this.examPath = examPath;
@@ -115,8 +115,13 @@ export class AnalysisService {
       this.afs.getQuestions(examPath);
       this.afs.getResponses(examPath);
     }
-    this.createQuartiles(this.responses, this.questions, this.students);
-    this.createItemAnalysis(this.responses, this.questions)
+  }
+
+  generateStatistics() {
+    if (this.responses && this.questions && this.students) {
+      this.createQuartiles(this.responses, this.questions, this.students);
+      this.createItemAnalysis(this.responses, this.questions)
+    }
   }
 
   createQuartiles(responses: QuestionResponse[], questions: Map<string, Question>, roster: Map<string, Student>) {
@@ -137,7 +142,7 @@ export class AnalysisService {
         Array("A", "B", "C", "D").forEach(answerChoice =>
           aggregator.get(response.questionPath).set(answerChoice, 0)
         )
-        aggregator.get(response.questionPath).set("Correct",questions.get(response.questionPath).correctAnswer)
+        aggregator.get(response.questionPath).set("Correct", questions.get(response.questionPath).correctAnswer)
       }
       const oldNumber = aggregator.get(response.questionPath).get(response.answerChoice);
       aggregator.get(response.questionPath).set(response.answerChoice, oldNumber + 1)

@@ -58,7 +58,8 @@ export class InterimsAFSService {
   }
 
   getTestTakers(examPath: string) {
-    let query: QueryFn = ref => ref.where(`exams.${examPath}`, "==", true);
+    const examID = examPath.split("/")[1];
+    let query: QueryFn = ref => ref.where(`EXAMS.${examID}`, "==", true);
     this.createReferences<Student>(this.afs.collection<Student>("students", query)).subscribe(this.students)
   }
 
