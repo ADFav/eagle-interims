@@ -70,7 +70,7 @@ export class InterimsAFSService {
   getStudent(studentID: string) {
     this.afs.doc<Student>(`students/${studentID}`).ref.get().then(snapshot =>
       this.student.next(snapshot.data() as Student)
-    )
+    ) 
   }
 
   getExam(examPath: string){
