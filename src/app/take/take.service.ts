@@ -6,6 +6,7 @@ import { StubInterimsAFSService } from '../stub-interims-afs.service';
 import { Subject } from 'rxjs';
 import { FirestoreReference } from 'src/app/models/firestore-reference';
 import { InterimsAFSService } from '../interims-afs.service';
+import { QuestionResponse } from 'src/app/models/question-response';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class TakeService {
   student: Subject<Student>;
   questions: Subject<FirestoreReference<Question>[]>;
   examsList: Subject<FirestoreReference<Exam>[]>;
+  examPath: string;
   constructor(
     private afs: InterimsAFSService
   ) {
@@ -42,6 +44,11 @@ export class TakeService {
   }
 
   selectExam(examPath: string) {
+    this.examPath = examPath;
     this.afs.getQuestions(examPath);
+  }
+
+  writeResponses(responses: Map<string, QuestionResponse>) {
+    return this.afs.writeResponses(responses);
   }
 }

@@ -136,7 +136,7 @@ export class StubInterimsAFSService {
     questions.forEach((question, questionKey) => {
       students.forEach((student, studentID) => {
         let response = {} as QuestionResponse;
-        response.examID = examPath;
+        response.examPath = examPath;
         response.questionPath = questionKey;
         response.studentPath = String(studentID);
         response.answerChoice = Array("A", "B", "C", "D")[Math.floor(4 * Math.random())];

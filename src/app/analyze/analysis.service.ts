@@ -24,7 +24,7 @@ export class AnalysisService {
   examPath: string;
   PASSING_GRADE: number = 10;
   constructor(
-    private afs: StubInterimsAFSService,
+    private afs: InterimsAFSService,
     private logger: LoggerService
   ) {
     this.quartilesObservable = new Subject<any[]>();

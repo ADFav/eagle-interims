@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, QueryFn, } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, QueryFn} from 'angularfire2/firestore';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { LoggerService } from './logger.service';
-import { Exam } from './models/exam';
-import { Question } from './models/question';
-import { Student } from './models/student';
-import { QuestionResponse } from './models/question-response';
+import { LoggerService } from 'src/app/logger.service';
+import { Exam } from 'src/app/models/exam';
+import { Question } from 'src/app/models/question';
+import { Student } from 'src/app/models/student';
+import { QuestionResponse } from 'src/app/models/question-response';
 import { FirestoreReference } from 'src/app/models/firestore-reference';
 
 @Injectable({
@@ -75,6 +75,14 @@ export class InterimsAFSService {
 
   getExam(examPath: string){
     return this.afs.doc(examPath).ref.get().then(snapshot => ({path: snapshot.ref.path , data: snapshot.data() as Exam }))
+  }
+
+  writeResponses(responses: Map<string, QuestionResponse>) {
+    const batch = this.afs.firestore.batch();
+    responses.forEach((response, questionPath) =>
+      batch.set(this.afs.collection(`${response.examPath}/responses`).doc(this.afs.createId()).ref,Object.assign({},response))
+    )
+    return batch.commit();
   }
 
 }

@@ -18,13 +18,10 @@ export class TakeQuestionComponent implements OnChanges, OnInit {
   question: Question;
   SAResponse: string;
   questionPath: string;
-  student: Student;
+  @Input() student: Student;
   constructor(private take: TakeService) { }
 
-  ngOnInit() {
-    this.take.student.subscribe(student => this.student = student);
-    console.log(this.question);
-  }
+  ngOnInit() {  }
 
   ngOnChanges() {
     this.question = this.questionRef.data;
@@ -36,7 +33,8 @@ export class TakeQuestionComponent implements OnChanges, OnInit {
     const result = {} as QuestionResponse;
     result.questionPath = this.questionPath;
     result.answerChoice = response;
-    result.studentPath = `students/10`;
+    result.studentPath = `students/${this.student.STUDENT_ID}`;
+    result.examPath = this.questionPath.split("/").slice(0,2).join("/");
     this.response.emit(result);
   }
   L() {
