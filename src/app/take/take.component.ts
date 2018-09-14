@@ -1,50 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { TakeService } from './take.service';
-import { AngularFirestore } from 'angularfire2/firestore';
-import { Question } from 'src/app/models/question';
-import { QuestionResponse } from 'src/app/models/question-response';
+import { Exam } from 'src/app/models/exam';
 import { FirestoreReference } from 'src/app/models/firestore-reference';
+import { Student } from 'src/app/models/student';
+import { Question } from 'src/app/models/question';
 
 @Component({
   selector: 'app-take',
   templateUrl: './take.component.html',
   styleUrls: ['./take.component.css']
 })
-export class TakeComponent implements OnInit {
+export class TakeComponent implements OnInit, OnChanges {
+  questions: FirestoreReference<Question>[]
+  examsList: FirestoreReference<Exam>[]
+  student: Student;
 
-  currentQuestion: FirestoreReference<Question>;
-  questions: FirestoreReference<Question>[];
-  questionIndex: number;
-  responses: Map<string, QuestionResponse>;
-  constructor(private afs: AngularFirestore) { }
+  isLoggedIn: boolean;
+  hasSelectedExam: boolean;
 
   ngOnInit() {
-    this.currentQuestion = {} as FirestoreReference<Question>;
-    this.responses = new Map<string, QuestionResponse>();
-    console.log(this.currentQuestion);
-    this.questionIndex = 0;
-    this.afs.collection("/exams/2SXvHc2EtCCKgRj6qwHA/questions").ref.get().then(snapshots => {
-      this.questions = snapshots.docs.map(snapshot => ({ path: snapshot.ref.path, data: snapshot.data() as Question }));
-      this.currentQuestion = this.questions[0];
-      console.log(this.currentQuestion);
-    })
+    this.isLoggedIn = false;
+    this.hasSelectedExam = true;
+
+    this.take.questions.subscribe(questions => this.questions = questions);
+    this.take.student.subscribe(student => this.student = student);
+    this.take.examsList.subscribe(examsList => {
+      console.log(examsList);
+      this.examsList = examsList;
+      this.hasSelectedExam = examsList.length == 1;
+    });
   }
 
-  setResponse(response: QuestionResponse) {
-    this.responses.set(response.questionPath, response);
-    this.next();
+  ngOnChanges() { }
+
+  constructor(private take: TakeService) { }
+
+  login(loggedIn: boolean) {
+    this.isLoggedIn = loggedIn;
+    if (this.isLoggedIn) {
+      this.take.getStudentsExams(this.student);
+    }
   }
 
-  next() {
-    this.questionIndex++;
-    this.questionIndex %= this.questions.length;
-    this.currentQuestion = this.questions[this.questionIndex];
+  selectExam(examPath){
+     this.take.selectExam(examPath);
+     this.hasSelectedExam = true;
   }
-
-  setQuestion(questionRef: FirestoreReference<Question>){
-    console.log(questionRef);
-    this.questionIndex = this.questions.map(question => question.path).indexOf(questionRef.path);
-    this.currentQuestion = this.questions[this.questionIndex];
-  }
-
 }

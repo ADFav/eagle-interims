@@ -1,0 +1,3 @@
+<button (click)="next()">Next</button>
+<app-take-question [questionRef]="currentQuestion" (response)="setResponse($event)"></app-take-question>
+<app-question-selector [questionRefs]="questions" (selection)="setQuestion($event)"></app-question-selector>

@@ -17,6 +17,7 @@ export class InterimsAFSService {
   exams: Observable<FirestoreReference<Exam>[]>;
   questions: Subject<FirestoreReference<Question>[]>;
   students: Subject<FirestoreReference<Student>[]>;
+  student: Subject<Student>;
   responses: Subject<QuestionResponse[]>;
 
   constructor(
@@ -27,6 +28,7 @@ export class InterimsAFSService {
     this.questions = new Subject<FirestoreReference<Question>[]>();
     this.students = new Subject<FirestoreReference<Student>[]>();
     this.responses = new Subject<QuestionResponse[]>();
+    this.student = new Subject<Student>();
   }
 
   createReferences<TYPE>(collection: AngularFirestoreCollection<TYPE>) {
@@ -64,4 +66,15 @@ export class InterimsAFSService {
     this.afs.doc(examPath).collection<QuestionResponse>("responses").snapshotChanges().pipe(map(actions =>
       actions.map(action => action.payload.doc.data()))).subscribe(this.responses);
   }
+
+  getStudent(studentID: string) {
+    this.afs.doc<Student>(`students/${studentID}`).ref.get().then(snapshot =>
+      this.student.next(snapshot.data() as Student)
+    )
+  }
+
+  getExam(examPath: string){
+    return this.afs.doc(examPath).ref.get().then(snapshot => ({path: snapshot.ref.path , data: snapshot.data() as Exam }))
+  }
+
 }

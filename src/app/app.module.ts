@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment'
+import { CookieService} from 'ngx-cookie-service'
 
 import { AppComponent } from './app.component';
 import { QuestionEditorComponent } from 'src/app/exam-editor/question-editor/question-editor.component';
@@ -23,6 +24,9 @@ import { ImgQuestionEditorComponent } from 'src/app/exam-editor/question-editor/
 import { TakeComponent } from './take/take.component';
 import { TakeQuestionComponent } from './take/take-question/take-question.component';
 import { QuestionSelectorComponent } from './take/question-selector/question-selector.component';
+import { StudentLoginComponent } from './take/student-login/student-login.component';
+import { TakeExamComponent } from './take/take-exam/take-exam.component';
+import { StudentSelectExamComponent } from './take/student-select-exam/student-select-exam.component';
 
 const appRoutes: Routes = [
   { path: 'take', component: TakeComponent },
@@ -48,7 +52,10 @@ const appRoutes: Routes = [
     ImgQuestionEditorComponent,
     TakeComponent,
     TakeQuestionComponent,
-    QuestionSelectorComponent
+    QuestionSelectorComponent,
+    StudentLoginComponent,
+    TakeExamComponent,
+    StudentSelectExamComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +67,7 @@ const appRoutes: Routes = [
       { enableTracing: false }
     )
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

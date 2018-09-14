@@ -22,7 +22,7 @@ export class TakeQuestionComponent implements OnChanges, OnInit {
   constructor(private take: TakeService) { }
 
   ngOnInit() {
-    this.student = this.take.student;
+    this.take.student.subscribe(student => this.student = student);
     console.log(this.question);
   }
 

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-
-import { Observable, of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { LoggerService } from './logger.service';
 import { Exam } from 'src/app/models/exam';
 import { Question } from 'src/app/models/question';
@@ -13,16 +12,17 @@ import { FirestoreReference } from 'src/app/models/firestore-reference';
   providedIn: 'root'
 })
 export class StubInterimsAFSService {
-  exams: Observable<FirestoreReference<Exam>[]>
+  exams: Subject<FirestoreReference<Exam>[]>
   questions: Subject<FirestoreReference<Question>[]>
   students: Subject<FirestoreReference<Student>[]>
   responses: Subject<QuestionResponse[]>
+  student: Subject<Student>;
 
   private examData: Map<string, Exam>;
   private questionsData: Map<string, Question>;
   private studentData: Map<string, Student>;
   private responsesData: QuestionResponse[]
-  
+
   private NUMQUESTIONS: number = 24;
 
   constructor(private logger: LoggerService) {
@@ -30,6 +30,8 @@ export class StubInterimsAFSService {
     this.questionsData = new Map<string, Question>();
     this.studentData = new Map<string, Student>();
 
+    this.student = new Subject<Student>();
+    this.exams = new Subject<FirestoreReference<Exam>[]>();
     this.questions = new Subject<FirestoreReference<Question>[]>();
     this.students = new Subject<FirestoreReference<Student>[]>();
     this.responses = new Subject<QuestionResponse[]>();
@@ -46,8 +48,7 @@ export class StubInterimsAFSService {
         })
       })
     })
-    this.exams = of(references)
-    this.logger.log(references);
+    this.exams.next(references)
   }
 
   private _generateQuestions(examPath: string) {
@@ -59,7 +60,7 @@ export class StubInterimsAFSService {
         question.isMC = true;
         question.questionText = `This is question #${1 + questionNumber} of exam ${examPath}`;
         Array("A", "B", "C", "D").forEach(answerChoice =>
-          question[`answer${answerChoice}`] = `This is answer choice ${answerChoice} for question #${questionNumber}`
+          question[`answer${answerChoice}`] = `This is answer choice ${answerChoice} for question #${1+questionNumber}`
         )
         question.correctAnswer = Array("A", "B", "C", "D")[Math.floor(4 * Math.random())]
         question.standards = Array(3).fill(0).map(standard =>
@@ -148,14 +149,26 @@ export class StubInterimsAFSService {
     this.responses.next(this.responsesData)
   }
 
-  getTestTakers(examPath: string){
-    this._generateStudents(); 
+  getTestTakers(examPath: string) {
+    this._generateStudents();
   }
 
-  getStudent(studentID: string): Student {
-    const result = {} as Student;
-    result.STUDENT_ID = studentID;
-    result.NAME = "FAKE NAME";
-    return result;
+  getStudent(studentID: string) {
+    if (Number(studentID) > 0) {
+      const student = {} as Student;
+      student.STUDENT_ID = studentID;
+      student.NAME = "FAKE NAME";
+      student.EXAMS = ['exams/2018.A.1', 'exams/2018.B.1']
+      this.student.next(student);
+    } else {
+      this.student.next(null);
+    }
+  }
+
+  getExam(examPath: string) {
+    this.logger.log(examPath);
+    const exam = this.examData.get(examPath);
+    const _getExam = () => ({ path: examPath, data: exam })
+    return new Promise<FirestoreReference<Exam>>( (res, rej) => res(_getExam()));
   }
 }

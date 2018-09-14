@@ -1,0 +1,4 @@
+<h1>Log in with your student ID</h1>
+<input type="text" [(ngModel)]="studentID" />
+<button (click)="submit()">Submit</button>
+<span *ngIf="alert">{{alert}}</span>

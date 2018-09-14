@@ -1,7 +1,7 @@
-import { Injectable, Testability } from '@angular/core';
-import { InterimsAFSService } from '../interims-afs.service';
+import { Injectable } from '@angular/core';
+import { InterimsAFSService } from "src/app/interims-afs.service";
 import { Subject } from 'rxjs';
-import { StubInterimsAFSService } from '../stub-interims-afs.service';
+import { StubInterimsAFSService } from "src/app/stub-interims-afs.service";
 import { LoggerService, StubLoggerService } from '../logger.service';
 import { Exam } from 'src/app/models/exam';
 import { FirestoreReference } from 'src/app/models/firestore-reference';
