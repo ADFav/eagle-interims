@@ -1,16 +1,24 @@
-Select Exam:
-<select [(ngModel)]="selectedYear" (ngModelChange)="getExamSubjects()">
-    <option *ngFor="let year of yearsList" [value]="year">
-        {{year}}
-    </option>
-</select> ›
-<select [(ngModel)]="selectedSubject" (ngModelChange) = "getExamNumbers()">
-    <option *ngFor="let subject of subjectsList" [value]="subject">
-        {{subject}}
-    </option>
-</select> ›
-<select [(ngModel)]="selectedNumber" (ngModelChange) = "setKey()">
-    <option *ngFor="let number of numbersList" [value]="number">
-        {{number}}
-    </option>
-</select>
+<h1 class="mat-headline">
+    Select Exam:
+</h1>
+<mat-form-field>
+    <mat-select placeholder="Interim Year" [(ngModel)]="selectedYear" (ngModelChange)="getExamSubjects()">
+        <mat-option *ngFor="let year of yearsList" [value]="year">
+            {{year}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>›
+<mat-form-field>
+    <mat-select placeholder="Interim Subject" [(ngModel)]="selectedSubject" (ngModelChange)="getExamNumbers()">
+        <mat-option *ngFor="let subject of subjectsList" [value]="subject">
+            {{subject}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>›
+<mat-form-field>
+    <mat-select placeholder="Interim Number" [(ngModel)]="selectedNumber" (ngModelChange)="setKey()">
+        <mat-option *ngFor="let number of numbersList" [value]="number">
+            {{number}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

@@ -1,4 +1,4 @@
-:host{
+/* :host{
     display: grid;
     grid-template-areas:
     ' header header header    '
@@ -76,4 +76,4 @@ h2{
 li > div{
     display: grid;
     grid-template-columns: 5fr 1fr 2fr;
-}
+} */

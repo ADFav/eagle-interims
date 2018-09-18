@@ -1,4 +1,4 @@
-div{
+/* div{
     display: grid;
     grid-template-columns: 1fr 2fr;
 }
@@ -10,4 +10,4 @@ div{
 button.selected{
     background-color: goldenrod;
     font-weight: bold;
-}
+} */

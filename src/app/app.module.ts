@@ -5,7 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment'
-import { CookieService} from 'ngx-cookie-service'
+import { CookieService } from 'ngx-cookie-service'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatModule } from './mat-module/mat-module.module'
+
 
 import { AppComponent } from './app.component';
 import { QuestionEditorComponent } from 'src/app/exam-editor/question-editor/question-editor.component';
@@ -27,11 +30,15 @@ import { QuestionSelectorComponent } from './take/question-selector/question-sel
 import { StudentLoginComponent } from './take/student-login/student-login.component';
 import { TakeExamComponent } from './take/take-exam/take-exam.component';
 import { StudentSelectExamComponent } from './take/student-select-exam/student-select-exam.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
   { path: 'take', component: TakeComponent },
   { path: 'analysis', component: AnalyzeComponent },
-  { path: '', component: ExamEditorComponent }
+  { path: 'exams', component: ExamEditorComponent },
+  { path: 'login', component: LoginComponent },
+  { path: '', component: TakeComponent }
 ];
 
 @NgModule({
@@ -55,13 +62,17 @@ const appRoutes: Routes = [
     QuestionSelectorComponent,
     StudentLoginComponent,
     TakeExamComponent,
-    StudentSelectExamComponent
+    StudentSelectExamComponent,
+    NavbarComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     FormsModule,
+    BrowserAnimationsModule,
+    MatModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false }

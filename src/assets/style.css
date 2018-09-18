@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+/* @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
 :root{
     --blue-yonder: #6376a8;
@@ -9,8 +9,8 @@
 }
 
 ::-webkit-scrollbar {
-    width: 0px;  /* remove scrollbar space */
-    background: transparent;  /* optional: just make scrollbar invisible */
+    width: 0px; 
+    background: transparent;  
 }
 
 *{
@@ -51,4 +51,9 @@ button{
     color: var(--gunmetal);
     font-family: arial, sans-serif;
     font-weight: bold;
+} */
+
+router-outlet{
+    max-width: 960px;
+    margin: auto;
 }

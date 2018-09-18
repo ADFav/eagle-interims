@@ -1,4 +1,4 @@
-select{
+/* select{
     outline: none;
     background-color: transparent;
     border: none;
@@ -15,4 +15,8 @@ select:first-of-type, select:last-of-type{
 
 select:nth-of-type(2){
     width:250px;
+} */
+
+.mat-select-placeholder{
+    text-align: center;
 }
