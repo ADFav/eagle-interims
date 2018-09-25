@@ -22,6 +22,7 @@ export class ExamSelectorService {
     private logger: LoggerService
   ) {
     this.logger.log("Initializing Exam Selector Service");
+    this.exams = [];
     this.examYears = new Subject<number[]>();
     this.examSubjects = new Subject<string[]>();
     this.examNumbers = new Subject<number[]>();

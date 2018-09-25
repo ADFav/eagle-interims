@@ -4,6 +4,8 @@ import { Exam } from 'src/app/models/exam';
 import { FirestoreReference } from 'src/app/models/firestore-reference';
 import { Student } from 'src/app/models/student';
 import { Question } from 'src/app/models/question';
+import { MatDialog } from '@angular/material';
+import { StudentLoginComponent } from './student-login/student-login.component';
 
 @Component({
   selector: 'app-take',
@@ -27,13 +29,14 @@ export class TakeComponent implements OnInit, OnChanges {
     this.take.examsList.subscribe(examsList => {
       console.log(examsList);
       this.examsList = examsList;
-      this.hasSelectedExam = examsList.length == 1;
+      this.hasSelectedExam = examsList.length === 1;
     });
+    this.dialog.open(StudentLoginComponent).afterClosed().subscribe(console.log);
   }
 
   ngOnChanges() { }
 
-  constructor(private take: TakeService) { }
+  constructor(private take: TakeService, public dialog: MatDialog) { }
 
   login(loggedIn: boolean) {
     this.isLoggedIn = loggedIn;

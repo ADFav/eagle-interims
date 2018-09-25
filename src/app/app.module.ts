@@ -79,6 +79,7 @@ const appRoutes: Routes = [
     )
   ],
   providers: [CookieService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [StudentLoginComponent]
 })
 export class AppModule { }

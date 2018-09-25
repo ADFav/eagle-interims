@@ -1,11 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
-body{
-    margin: 0px;
-}
-
-.mat-select-placeholder{
-    display: block;
-    text-align: center;
+.mat-row:nth-child(even){
+    background-color: #f4f4f4;
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { TakeService } from '../take.service';
 import { Student } from 'src/app/models/student';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-student-login',
@@ -14,7 +15,9 @@ export class StudentLoginComponent implements OnInit {
   alert: string;
 
   @Output() loggedIn = new EventEmitter<boolean>();
-  constructor(private take: TakeService) { }
+  constructor(
+    private dialogRef: MatDialogRef<StudentLoginComponent>,
+    private take: TakeService){}
 
   ngOnInit() {
     this.take.student.subscribe(student => {
@@ -23,6 +26,7 @@ export class StudentLoginComponent implements OnInit {
   }
 
   submit() {
+    console.log("submit button hit");
     if (this.studentID === "") {
       this.alert = "Enter your student ID";
     } else {
@@ -37,8 +41,10 @@ export class StudentLoginComponent implements OnInit {
       this.loggedIn.emit(false);
     } else {
       this.loggedIn.emit(true);
+      this.dialogRef.close();
     }
   }
-
-
+  closeDialog(){
+    this.dialogRef.close();
+  }
 }

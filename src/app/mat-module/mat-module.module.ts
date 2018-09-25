@@ -5,7 +5,19 @@ import {
   MatTooltipModule,
   MatButtonModule,
   MatSelectModule,
-  MatFormFieldModule
+  MatFormFieldModule,
+  MatSidenavModule,
+  MatTableModule,
+  MatChipsModule,
+  MatGridListModule,
+  MatInputModule,
+  MatSlideToggleModule,
+  MatDividerModule,
+  MatDialogModule,
+  MatButtonToggleModule,
+  MatCheckboxModule,
+  MatRadioButton,
+  MatRadioModule
 } from '@angular/material';
 
 const importsExports = [
@@ -14,7 +26,18 @@ const importsExports = [
   MatTooltipModule,
   MatButtonModule,
   MatSelectModule,
-  MatFormFieldModule
+  MatFormFieldModule,
+  MatSidenavModule,
+  MatTableModule,
+  MatChipsModule,
+  MatGridListModule,
+  MatInputModule,
+  MatSlideToggleModule,
+  MatDividerModule,
+  MatDialogModule,
+  MatButtonToggleModule,
+  MatCheckboxModule,
+  MatRadioModule
 ]
 
 @NgModule({

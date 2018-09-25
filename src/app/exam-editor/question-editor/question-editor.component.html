@@ -1,7 +1,9 @@
-<div>
-    <h2>Directions</h2>
-    <textarea [(ngModel)] = "currentQuestion.directions"></textarea>
-    <app-text-question-editor *ngIf="!currentQuestion.isIMG" [question]="currentQuestion"></app-text-question-editor>
-    <app-img-question-editor *ngIf="currentQuestion.isIMG" [question]="currentQuestion"></app-img-question-editor>
-    <app-question-metadata [question]="currentQuestion"></app-question-metadata>
-</div>
+<mat-form-field appearance="outline">
+    <textarea placeholder="Directions go here if you need them" matInput [(ngModel)]="currentQuestion.directions"></textarea>
+    <mat-hint>{{currentQuestion.directions ? "Directions" : ""}}</mat-hint>
+</mat-form-field>
+
+<app-text-question-editor *ngIf="!currentQuestion.isIMG" [question]="currentQuestion"></app-text-question-editor>
+<app-img-question-editor *ngIf="currentQuestion.isIMG" [question]="currentQuestion"></app-img-question-editor>
+<mat-divider [vertical]="true"></mat-divider>
+<app-question-metadata [question]="currentQuestion"></app-question-metadata>

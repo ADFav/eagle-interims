@@ -12,3 +12,19 @@
     padding: 0px;
     margin: 0px;
 } */
+
+.mat-cell, .mat-header-cell{
+    flex: 1 1;
+}
+
+.mat-header-cell.mat-column-text, .mat-cell.mat-column-text{
+    flex: 4 4;
+
+}
+
+.mat-header-cell.mat-column-text>p, .mat-cell.mat-column-text>p{
+    width: 100%;
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

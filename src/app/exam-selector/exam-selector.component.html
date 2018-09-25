@@ -1,6 +1,3 @@
-<h1 class="mat-headline">
-    Select Exam:
-</h1>
 <mat-form-field>
     <mat-select placeholder="Interim Year" [(ngModel)]="selectedYear" (ngModelChange)="getExamSubjects()">
         <mat-option *ngFor="let year of yearsList" [value]="year">

@@ -16,3 +16,19 @@ img{
 input{
     margin: auto;
 } */
+
+img{
+    max-width: 100%;
+}
+
+mat-form-field{
+    width: 50%;
+}
+
+mat-form-field textarea{
+    width: 90%;
+}
+
+.correct{
+    background-color: goldenrod;
+}

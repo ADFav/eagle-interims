@@ -1,4 +1,9 @@
-<h1>Log in with your student ID</h1>
-<input type="text" [(ngModel)]="studentID" />
-<button (click)="submit()">Submit</button>
-<span *ngIf="alert">{{alert}}</span>
+<h1 mat-dialog-title>Login</h1>
+<div mat-dialog-content>
+    <mat-form-field appearance="outline">
+        <input matInput placeholder="StudentID" [(ngModel)]="id"/>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="submit()">Login</button>
+    <div><a mat-button (click)="closeDialog()" routerLink="/exams">I'm an educator</a></div>
+    <span>{{alert}}</span>
+</div>

@@ -11,3 +11,15 @@ button.selected{
     background-color: goldenrod;
     font-weight: bold;
 } */
+
+mat-form-field{
+    width: 100%;
+}
+
+mat-button-toggle{
+    width: 50%;
+}
+
+mat-button-toggle-group{
+    width: 100%;
+}

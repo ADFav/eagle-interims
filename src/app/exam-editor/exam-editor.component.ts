@@ -14,6 +14,7 @@ export class ExamEditorComponent implements OnInit {
   hidePreview: boolean;
   newQuestion: FirestoreReference<Question>;
   currentExam: string;
+  KEYS: string[] = ["Type","Question Text", "Standards","Unit"]
 
   constructor(
     private editor: ExamEditorService,
@@ -28,12 +29,12 @@ export class ExamEditorComponent implements OnInit {
     });
   }
 
-  loadQuestions($event) {
-    if ($event) {
+  loadQuestions(examPath: string) {
+    if (examPath) {
       this.logger.log("Loading in questions");
-      this.editor.getQuestions($event);
-      this.currentExam = $event;
-      this.editor.examPath = $event;
+      this.editor.getQuestions(examPath);
+      this.currentExam = examPath;
+      this.editor.examPath = examPath;
     }
   }
 
@@ -49,7 +50,8 @@ export class ExamEditorComponent implements OnInit {
   }
 
   addQuestion() {
-    this.newQuestion = { edit: true, data:{} as Question} as FirestoreReference<Question>;
+    this.logger.log("add question");
+    this.newQuestion = { edit: true, data:{isMC: true, isIMG:false} as Question}
     this.hidePreview = true;
   }
 
@@ -61,7 +63,12 @@ export class ExamEditorComponent implements OnInit {
   del(question: FirestoreReference<Question>) {
     if (confirm("Delete this question?")) {
       this.editor.delete(question);
+      this.hidePreview = false;
     }
+  }
+
+  cancel(){
+    this.hidePreview = false;
   }
 
   L(thing?): void {
