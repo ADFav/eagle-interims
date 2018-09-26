@@ -16,8 +16,9 @@ import {
   MatDialogModule,
   MatButtonToggleModule,
   MatCheckboxModule,
-  MatRadioButton,
-  MatRadioModule
+  MatRadioModule,
+  MatListModule,
+  MatCardModule
 } from '@angular/material';
 
 const importsExports = [
@@ -37,7 +38,9 @@ const importsExports = [
   MatDialogModule,
   MatButtonToggleModule,
   MatCheckboxModule,
-  MatRadioModule
+  MatRadioModule,
+  MatListModule,
+  MatCardModule
 ]
 
 @NgModule({

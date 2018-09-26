@@ -36,11 +36,9 @@ export class StudentLoginComponent implements OnInit {
 
   handleIncomingStudent(student: Student) {
     this.student = student;
-    if (this.student === null) {
+    if (!this.student || this.student === null) {
       this.alert = "Could not find student ID, try again";
-      this.loggedIn.emit(false);
     } else {
-      this.loggedIn.emit(true);
       this.dialogRef.close();
     }
   }

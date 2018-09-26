@@ -1,6 +1,9 @@
-LOL
-<ol>
-  <li *ngFor="let exam of exams" (click)="selectExam(exam)">
-    {{examPreview(exam)}}
-  </li>
-</ol>
+<mat-card style="max-width: 480px; margin: auto">
+  <mat-toolbar>Select Today's Exam</mat-toolbar>
+  <mat-nav-list>
+    <mat-list-item *ngFor="let exam of exams" (click)="selectExam(exam)">
+      <h2>{{exam.data.subject}} #{{exam.data.interimNumber}}</h2>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-nav-list>
+</mat-card>

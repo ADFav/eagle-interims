@@ -21,12 +21,16 @@ export class TakeQuestionComponent implements OnChanges, OnInit {
   @Input() student: Student;
   constructor(private take: TakeService) { }
 
-  ngOnInit() {  }
+  ngOnInit() {    }
 
   ngOnChanges() {
+    if(this.question){
+      this.setResponse("");
+    }
     this.question = this.questionRef.data;
     this.questionPath = this.questionRef.path;
     this.SAResponse = "";
+    console.log("New Take Component");
   }
 
   setResponse(response: string) {

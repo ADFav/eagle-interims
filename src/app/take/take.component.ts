@@ -25,28 +25,28 @@ export class TakeComponent implements OnInit, OnChanges {
     this.hasSelectedExam = true;
 
     this.take.questions.subscribe(questions => this.questions = questions);
-    this.take.student.subscribe(student => this.student = student);
+    this.take.student.subscribe(student => {
+      this.student = student
+      if(student){
+        this.take.getStudentsExams(student);
+      }
+    });
     this.take.examsList.subscribe(examsList => {
       console.log(examsList);
       this.examsList = examsList;
       this.hasSelectedExam = examsList.length === 1;
     });
-    this.dialog.open(StudentLoginComponent).afterClosed().subscribe(console.log);
+    this.take.isLoggedIn.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
+    this.dialog.open(StudentLoginComponent);
+
   }
 
   ngOnChanges() { }
 
   constructor(private take: TakeService, public dialog: MatDialog) { }
 
-  login(loggedIn: boolean) {
-    this.isLoggedIn = loggedIn;
-    if (this.isLoggedIn) {
-      this.take.getStudentsExams(this.student);
-    }
-  }
-
-  selectExam(examPath){
-     this.take.selectExam(examPath);
-     this.hasSelectedExam = true;
+  selectExam(examPath) {
+    this.take.selectExam(examPath);
+    this.hasSelectedExam = true;
   }
 }

@@ -25,15 +25,17 @@ export class TakeExamComponent implements OnInit, OnChanges {
     this.questionIndex = 0;
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     if (this.questions) {
       this.currentQuestion = this.questions[this.questionIndex];
     }
   }
 
   setResponse(response: QuestionResponse) {
-    this.responses.set(response.questionPath, response);
-    this.next();
+    if (response.answerChoice != "" || !this.responses.has(response.questionPath)) {
+      this.responses.set(response.questionPath, response);
+      this.next();
+    }
   }
 
   next() {
@@ -48,10 +50,10 @@ export class TakeExamComponent implements OnInit, OnChanges {
     this.currentQuestion = this.questions[this.questionIndex];
   }
 
-  writeResponses(){
-    if(this.responses.size == this.questions.length){
+  writeResponses() {
+    if (this.responses.size == this.questions.length) {
       this.take.writeResponses(this.responses).then(() => console.log("Responses written!"))
-    } else{
+    } else {
       alert("You haven't answered every question yet!");
     }
   }

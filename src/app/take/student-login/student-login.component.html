@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Login</h1>
 <div mat-dialog-content>
     <mat-form-field appearance="outline">
-        <input matInput placeholder="StudentID" [(ngModel)]="id"/>
+        <input matInput placeholder="StudentID" [(ngModel)]="studentID"/>
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="submit()">Login</button>
     <div><a mat-button (click)="closeDialog()" routerLink="/exams">I'm an educator</a></div>

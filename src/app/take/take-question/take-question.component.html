@@ -1,3 +1,4 @@
+<!-- 
 <button (click)="L()">Log</button>
 <div *ngIf="question">
   <h1>{{question.directions}}</h1>
@@ -27,4 +28,30 @@
       </ol>
     </div>
   </div>
+</div>
+ -->
+<h2 *ngIf="question.directions && question.directions.length > 0" style="font-style:italic; grid-column: 1/3">
+  <span style="font-weight:bold">Directions: </span>
+  {{question.directions}}
+  <mat-divider></mat-divider>
+</h2>
+
+<div *ngIf="question" class="Question">
+  <img *ngIf="question.isIMG" [src]="question.image" />
+  <h2 *ngIf="!question.isIMG">
+    {{question.questionText}}
+    <img *ngIf="question['questionImg']" [src]="question['questionImg']" />
+  </h2>
+</div>
+<div *ngIf="question" class="Responses">
+  <mat-divider [vertical]="true" [inset]="true"></mat-divider>
+  <mat-nav-list *ngIf="question.isMC">
+    <mat-divider></mat-divider>
+    <mat-list-item *ngFor="let resp of ['A','B','C','D']" (click)="setResponse(resp)">
+      {{resp + ". "}}
+      <span *ngIf="!question.isIMG && question['answer'+resp]"> {{question['answer'+resp]}} </span>
+      <img *ngIf="question['answer'+resp+'img']" [src]="question['answer'+resp+'img']" />
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-nav-list>
 </div>

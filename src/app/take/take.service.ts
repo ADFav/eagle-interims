@@ -16,6 +16,7 @@ export class TakeService {
   questions: Subject<FirestoreReference<Question>[]>;
   examsList: Subject<FirestoreReference<Exam>[]>;
   examPath: string;
+  isLoggedIn: Subject<boolean>;
   constructor(
     private afs: InterimsAFSService
   ) {
@@ -23,7 +24,11 @@ export class TakeService {
     this.afs.questions.subscribe(questions => this.questions.next(questions));
 
     this.student = new Subject<Student>();
-    this.afs.student.subscribe(student => this.student.next(student))
+    this.isLoggedIn = new Subject<boolean>();
+    this.afs.student.subscribe(student => {
+      this.student.next(student)
+      this.isLoggedIn.next(!!student);
+    })
     this.examsList = new Subject<FirestoreReference<Exam>[]>();
   }
 
@@ -32,12 +37,13 @@ export class TakeService {
   }
 
   getStudentsExams(student: Student) {
-    const examPaths = Object.keys(student.EXAMS);
+    console.log("whut");
+    const examPaths = Object.keys(student.EXAMS).map(id => `exams/${id}`);
     if (examPaths.length === 1) {
       this.selectExam(examPaths[0]);
     } else {
-      const getAllExams: Promise<FirestoreReference<Exam>>[] = examPaths.map(path => this.afs.getExam(path));
-      Promise.all(getAllExams).then(exams =>{ 
+      const getAllExams = examPaths.map(path => this.afs.getExam(path));
+      Promise.all(getAllExams).then(exams => {
         this.examsList.next(exams)
       })
     }
