@@ -56,4 +56,4 @@
   <mat-header-row *matHeaderRowDef="['MC','IMG','text','unit','standards']"></mat-header-row>
   <mat-row *matRowDef="let row; columns: ['MC','IMG','text','unit','standards'];" (click)="edit(row)"></mat-row>
 </mat-table>
-<button mat-fab color="primary" (click)="addQuestion()" style="position: absolute; right: 25px; bottom: 25px;">+</button>
+<button *ngIf="questions && !hidePreview" mat-fab color="primary" (click)="addQuestion()" style="position: fixed; right: 10px; bottom: 10px;">+</button>

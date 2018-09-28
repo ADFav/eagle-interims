@@ -28,3 +28,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+mat-table{
+    margin-bottom: 76px;
+}

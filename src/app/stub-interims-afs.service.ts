@@ -6,6 +6,7 @@ import { Question } from 'src/app/models/question';
 import { Student } from 'src/app/models/student';
 import { QuestionResponse } from 'src/app/models/question-response';
 import { FirestoreReference } from 'src/app/models/firestore-reference';
+import { User } from 'src/app/models/user';
 
 
 @Injectable({
@@ -22,6 +23,7 @@ export class StubInterimsAFSService {
   private questionsData: Map<string, Question>;
   private studentData: Map<string, Student>;
   private responsesData: QuestionResponse[]
+  private users: Map<string, User>
 
   private NUMQUESTIONS: number = 24;
 
@@ -170,5 +172,18 @@ export class StubInterimsAFSService {
     const exam = this.examData.get(examPath);
     const _getExam = () => ({ path: examPath, data: exam })
     return new Promise<FirestoreReference<Exam>>( (res, rej) => res(_getExam()));
+  }
+
+  addUser(credentials: firebase.auth.UserCredential): User{
+    const uid = credentials.user.uid;
+    const user: User = {uid, isValidated: false, adminLevel: 1}
+    this.users.set(uid, user);
+    return user;
+  }
+
+  getUser(credentials: firebase.auth.UserCredential): User{
+    const uid = credentials.user.uid;
+    const user = this.users.get(uid);
+    return user;
   }
 }

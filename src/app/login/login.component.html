@@ -1,3 +1,16 @@
-<p>
-  login works!
-</p>
+<mat-card style="max-width: 480px; margin: auto;">
+    <mat-toolbar>Login</mat-toolbar>
+    <mat-form-field style="width: 100%" >
+        <input placeholder="Email" matInput [(ngModel)]="email" />
+    </mat-form-field>
+    <br>
+    <mat-form-field style="width: 100%">
+        <input placeholder="Password" type="password" matInput [(ngModel)]="password" />
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" (click)="signUpWithEmail()">Sign Up</button>
+    <br>
+    Or
+    <button mat-button color="primary" (click)="loginWithGoogle()">Log in with Google</button>
+    <div style="color:red">{{alert}}</div>
+</mat-card>

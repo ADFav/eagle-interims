@@ -1,6 +1,7 @@
-<ol *ngIf="questionRefs">
-  <li *ngFor="let question of questionRefs" (click)="select(question)">
+<mat-nav-list *ngIf="questionRefs">
+  <mat-list-item *ngFor="let question of questionRefs" (click)="select(question)" [style.backgroundImage]=" 'url(' + question.data.image + ')' "
+    [style.backgroundRepeat]="'no-repeat'" [style.backgroundSize]="'75%'">
     <span *ngIf="!question.data.isIMG">{{question.data.questionText}}</span>
-    <img *ngIf="question.data.isIMG" [src]="question.data.image" />
-  </li>
-</ol>
+    <!-- <img *ngIf="question.data.isIMG" [src]="question.data.image" /> -->
+  </mat-list-item>
+</mat-nav-list>

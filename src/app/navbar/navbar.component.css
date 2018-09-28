@@ -5,3 +5,10 @@ img{
 .fill-space{
     flex: 1 1 auto;
 }
+
+mat-toolbar{
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top : 0px;
+}

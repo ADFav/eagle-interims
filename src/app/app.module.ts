@@ -2,8 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment'
 import { CookieService } from 'ngx-cookie-service'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,6 +33,7 @@ import { TakeExamComponent } from './take/take-exam/take-exam.component';
 import { StudentSelectExamComponent } from './take/student-select-exam/student-select-exam.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
+import { AuthService } from './login/auth.service';
 
 const appRoutes: Routes = [
   { path: 'take', component: TakeComponent },
@@ -70,6 +72,7 @@ const appRoutes: Routes = [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireAuthModule,
     FormsModule,
     BrowserAnimationsModule,
     MatModule,
@@ -78,7 +81,10 @@ const appRoutes: Routes = [
       { enableTracing: false }
     )
   ],
-  providers: [CookieService],
+  providers: [
+    CookieService,
+    AuthService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [StudentLoginComponent]
 })

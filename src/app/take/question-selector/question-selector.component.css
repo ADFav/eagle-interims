@@ -1,0 +1,17 @@
+mat-list-item, mat-list-item *{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+mat-nav-list{
+    width: 100%;   
+}
+
+:host{
+    background-color: slateblue;    
+}
+
+*{
+    text-overflow: ellipsis;
+}

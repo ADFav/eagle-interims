@@ -1,4 +1,4 @@
 <button (click)="next()">Next</button>
 <button (click)="writeResponses()">Click here when finished!</button>
-<app-take-question *ngIf="currentQuestion" [questionRef]="currentQuestion" (response)="setResponse($event)" [student]="student"></app-take-question>
 <app-question-selector [questionRefs]="questions" [responses]="responses" (selection)="setQuestion($event)"></app-question-selector>
+<app-take-question *ngIf="currentQuestion" [questionRef]="currentQuestion" (response)="setResponse($event)" [student]="student"></app-take-question>
