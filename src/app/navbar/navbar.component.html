@@ -4,6 +4,6 @@
   <span class="fill-space"></span>
   <a *ngIf="loggedIn" mat-button routerLink="/exams">Exams</a>
   <a *ngIf="loggedIn" mat-button routerLink="/analysis">Analysis</a>
-  <a *ngIf="loggedIn" mat-button routerLink = "/" (click)="logout()">Logout</a>
+  <a *ngIf="loggedIn" mat-button routerLink = "/" (click)="logout()">Logout ({{userName}})  </a>
   <a *ngIf="!loggedIn" mat-button routerLink = "/login">Login</a>
 </mat-toolbar>

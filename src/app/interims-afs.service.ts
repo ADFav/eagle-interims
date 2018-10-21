@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, QueryFn} from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, QueryFn } from 'angularfire2/firestore';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -9,6 +9,7 @@ import { Question } from 'src/app/models/question';
 import { Student } from 'src/app/models/student';
 import { QuestionResponse } from 'src/app/models/question-response';
 import { FirestoreReference } from 'src/app/models/firestore-reference';
+import { User } from 'src/app/models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -71,19 +72,41 @@ export class InterimsAFSService {
   getStudent(studentID: string) {
     this.afs.doc<Student>(`students/${studentID}`).ref.get().then(snapshot =>
       this.student.next(snapshot.data() as Student)
-    ) 
+    )
   }
 
-  getExam(examPath: string){
-    return this.afs.doc(examPath).ref.get().then(snapshot => ({path: snapshot.ref.path , data: snapshot.data() as Exam }))
+  getExam(examPath: string) {
+    return this.afs.doc(examPath).ref.get().then(snapshot => ({ path: snapshot.ref.path, data: snapshot.data() as Exam }))
   }
 
   writeResponses(responses: Map<string, QuestionResponse>) {
     const batch = this.afs.firestore.batch();
     responses.forEach((response, questionPath) =>
-      batch.set(this.afs.collection(`${response.examPath}/responses`).doc(this.afs.createId()).ref,Object.assign({},response))
+      batch.set(this.afs.collection(`${response.examPath}/responses`).doc(this.afs.createId()).ref, Object.assign({}, response))
     )
     return batch.commit();
   }
 
+  addUser(user: firebase.User): Promise<FirestoreReference<User>> {
+    const uid = user.uid;
+    const newUser: User = {
+      uid,
+      userName: user.displayName,
+      isValidated: false,
+      adminLevel: 0
+    };
+    return this.afs.collection("users").doc(uid).set(newUser)
+      .then( () => {
+        console.log("added new user");
+        return {path: `users/${uid}`, data: newUser};
+      })
+  }
+
+  fetchUser(user: firebase.User): Promise<FirestoreReference<User>> {
+    return this.fetchUserByUID(user.uid);
+  }
+  fetchUserByUID(uid: string): Promise<FirestoreReference<User>>{
+    return this.afs.collection("users").doc<User>(uid).ref.get()
+      .then(snapshot => ({path: snapshot.ref.path, data: snapshot.data() as User}))
+  }
 }

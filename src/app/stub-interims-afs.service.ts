@@ -176,7 +176,7 @@ export class StubInterimsAFSService {
 
   addUser(credentials: firebase.auth.UserCredential): User{
     const uid = credentials.user.uid;
-    const user: User = {uid, isValidated: false, adminLevel: 1}
+    const user: User = {uid, isValidated: false, adminLevel: 1, userName: ""}
     this.users.set(uid, user);
     return user;
   }

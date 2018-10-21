@@ -22,4 +22,8 @@
       <mat-divider></mat-divider>
     </mat-list-item>
   </mat-nav-list>
+  <mat-form-field *ngIf="!question.isMC">
+    <textarea mat-input placeholder="Short answer response goes here" [(ngModel)]="SAResponse"></textarea>  
+  </mat-form-field>
+  <button mat-button (click)="setResponse(SAResponse)">Submit</button>
 </div>
