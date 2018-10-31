@@ -34,6 +34,8 @@ import { StudentSelectExamComponent } from './take/student-select-exam/student-s
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './login/auth.service';
+import { NewExamComponent } from './exam-selector/new-exam-component';
+
 
 const appRoutes: Routes = [
   { path: 'take', component: TakeComponent },
@@ -66,7 +68,8 @@ const appRoutes: Routes = [
     TakeExamComponent,
     StudentSelectExamComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    NewExamComponent
   ],
   imports: [
     BrowserModule,
@@ -86,6 +89,6 @@ const appRoutes: Routes = [
     AuthService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [StudentLoginComponent]
+  entryComponents: [StudentLoginComponent, NewExamComponent]
 })
 export class AppModule { }

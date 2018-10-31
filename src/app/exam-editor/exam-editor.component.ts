@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ExamEditorService } from './exam-editor.service';
 import { LoggerService } from '../logger.service';
 import { Question } from 'src/app/models/question';
@@ -14,11 +14,11 @@ export class ExamEditorComponent implements OnInit {
   hidePreview: boolean;
   newQuestion: FirestoreReference<Question>;
   currentExam: string;
-  KEYS: string[] = ["Type","Question Text", "Standards","Unit"]
+  KEYS: string[] = ["Type", "Question Text", "Standards", "Unit"]
 
   constructor(
     private editor: ExamEditorService,
-    private logger: LoggerService
+    private logger: LoggerService,
   ) { }
 
   ngOnInit() {
@@ -51,7 +51,7 @@ export class ExamEditorComponent implements OnInit {
 
   addQuestion() {
     this.logger.log("add question");
-    this.newQuestion = { edit: true, data:{isMC: true, isIMG:false} as Question}
+    this.newQuestion = { edit: true, data: { isMC: true, isIMG: false } as Question }
     this.hidePreview = true;
   }
 
@@ -67,7 +67,7 @@ export class ExamEditorComponent implements OnInit {
     }
   }
 
-  cancel(){
+  cancel() {
     this.hidePreview = false;
   }
 

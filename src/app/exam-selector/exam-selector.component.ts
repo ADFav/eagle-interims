@@ -2,6 +2,11 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { ExamSelectorService } from './exam-selector.service';
 import { LoggerService, StubLoggerService } from '../logger.service';
 import { Observer, Observable } from 'rxjs';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { NewExamComponent } from './new-exam-component';
+import { Exam } from '../models/exam';
+import { InterimsAFSService } from '../interims-afs.service';
+
 
 @Component({
   selector: 'app-exam-selector',
@@ -21,7 +26,8 @@ export class ExamSelectorComponent implements OnInit {
 
   constructor(
     private selector: ExamSelectorService,
-    private logger: LoggerService
+    private logger: LoggerService,
+    public dialog: MatDialog
   ) {  }
 
   ngOnInit() {
@@ -50,5 +56,11 @@ export class ExamSelectorComponent implements OnInit {
   }
   setKey() {
     this.selector.getExamPath(this.selectedYear, this.selectedSubject, this.selectedNumber);
+  }
+
+  addNewExam() {
+    let newExamDialog = this.dialog.open(NewExamComponent);
+
+    newExamDialog.afterClosed().subscribe(result => console.log(result));
   }
 }

@@ -96,17 +96,21 @@ export class InterimsAFSService {
       adminLevel: 0
     };
     return this.afs.collection("users").doc(uid).set(newUser)
-      .then( () => {
+      .then(() => {
         console.log("added new user");
-        return {path: `users/${uid}`, data: newUser};
+        return { path: `users/${uid}`, data: newUser };
       })
   }
 
   fetchUser(user: firebase.User): Promise<FirestoreReference<User>> {
     return this.fetchUserByUID(user.uid);
   }
-  fetchUserByUID(uid: string): Promise<FirestoreReference<User>>{
+  fetchUserByUID(uid: string): Promise<FirestoreReference<User>> {
     return this.afs.collection("users").doc<User>(uid).ref.get()
-      .then(snapshot => ({path: snapshot.ref.path, data: snapshot.data() as User}))
+      .then(snapshot => ({ path: snapshot.ref.path, data: snapshot.data() as User }))
+  }
+
+  addExam(exam: Exam) {
+    return this.afs.collection("exams").add(Object.assign({},exam));
   }
 }

@@ -1,7 +1,6 @@
 export class Exam {
-    constructor(
-        public year: number,
-        public subject: string,
-        public interimNumber: number
-    ){    }
+    public year: number;
+    public subject: string;
+    public interimNumber: number;
+    constructor() { }
 }

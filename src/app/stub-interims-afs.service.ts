@@ -44,9 +44,13 @@ export class StubInterimsAFSService {
     let references: FirestoreReference<Exam>[] = [];
     Array(2017, 2018, 2019).forEach((year: number) => {
       Array("A", "B", "C", "D").forEach(subject => {
-        Array(1, 2, 3).forEach(number => {
-          references.push({ path: `exams/${year}.${subject}.${number}`, data: new Exam(year, subject, number) })
-          this.examData.set(`exams/${year}.${subject}.${number}`, new Exam(year, subject, number))
+        Array(1, 2, 3).forEach(interimNumber => {
+          const exam = new Exam();
+          exam.year = year;
+          exam.subject = subject;
+          exam.interimNumber = interimNumber;
+          references.push({ path: `exams/${year}.${subject}.${interimNumber}`, data: exam })
+          this.examData.set(`exams/${year}.${subject}.${interimNumber}`, exam)
         })
       })
     })
