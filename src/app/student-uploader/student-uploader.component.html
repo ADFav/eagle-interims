@@ -1,1 +1,5 @@
-Register Students<input type="file" (change)="uploadCSV($event)">
+<button mat-raised-button color="warn">
+    <label for="studentUpload">Upload Students
+        <input type="file" (change)="uploadCSV($event)" id="studentUpload" hidden="true"/>
+    </label>
+</button>

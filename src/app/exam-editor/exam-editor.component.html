@@ -21,7 +21,6 @@
         <app-question-editor [question]="question.data"></app-question-editor>
       </div>
     </div>
-    PATH: {{currentExam}}
     <mat-table *ngIf="questions && !hidePreview" [dataSource]="questions" class="mat-elevation-z8">
       <ng-container matColumnDef="MC">
         <mat-header-cell *matHeaderCellDef> MC / SA </mat-header-cell>
