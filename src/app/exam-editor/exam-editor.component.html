@@ -1,4 +1,4 @@
-<app-exam-selector (examPath)="loadQuestions($event)"></app-exam-selector> 
+<app-exam-selector (examPath)="loadQuestions($event)"></app-exam-selector>
 <!-- <div *ngIf="!hidePreview && currentExam">
   <button (click)="addQuestion()">Add Question</button><br>
 </div> -->
@@ -7,52 +7,91 @@
   <button mat-raised-button color="warn" (click)="cancel()">Cancel</button>
   <app-question-editor [question]="newQuestion.data"></app-question-editor>
 </div>
-<div *ngFor="let question of questions">
-  <!-- <div *ngIf="!hidePreview" class="questionPreview">
+<mat-tab-group>
+  <mat-tab label="Questions">
+    <div *ngFor="let question of questions">
+      <!-- <div *ngIf="!hidePreview" class="questionPreview">
     <button (click)="edit(question)">Edit</button>
     <button (click)="del(question)">Delete</button>
     <app-question-preview [question]="question"></app-question-preview>
   </div> -->
-  <div *ngIf="hidePreview && question.edit">
-    <button mat-raised-button color="primary" (click)="submit(question)">Save</button>
-    <button mat-raised-button color="warn" (click)="del(question)">Delete</button>
-    <app-question-editor [question]="question.data"></app-question-editor>
-  </div>
-</div>
+      <div *ngIf="hidePreview && question.edit">
+        <button mat-raised-button color="primary" (click)="submit(question)">Save</button>
+        <button mat-raised-button color="warn" (click)="del(question)">Delete</button>
+        <app-question-editor [question]="question.data"></app-question-editor>
+      </div>
+    </div>
+    PATH: {{currentExam}}
+    <mat-table *ngIf="questions && !hidePreview" [dataSource]="questions" class="mat-elevation-z8">
+      <ng-container matColumnDef="MC">
+        <mat-header-cell *matHeaderCellDef> MC / SA </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <p>{{element.data.isMC ? 'Multiple Choice' : 'Short Answer'}}</p><br>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="IMG">
+        <mat-header-cell *matHeaderCellDef>IMG / TXT</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <p>{{element.data.isIMG ? 'Image' : 'Text'}}</p>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef='text'>
+        <mat-header-cell *matHeaderCellDef>Question Text</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <p>{{element.data.questionText}}</p>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef='unit'>
+        <mat-header-cell *matHeaderCellDef>Unit</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <p>{{element.data.unit}}</p>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef='standards'>
+        <mat-header-cell *matHeaderCellDef>Standards</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <p>{{element.data.standards ? element.data.standards.join(",") : ''}}</p>
+        </mat-cell>
+      </ng-container>
 
-<mat-table *ngIf="questions && !hidePreview" [dataSource]="questions" class="mat-elevation-z8">
-  <ng-container matColumnDef="MC">
-    <mat-header-cell *matHeaderCellDef> MC / SA </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <p>{{element.data.isMC ? 'Multiple Choice' : 'Short Answer'}}</p><br>
-    </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="IMG">
-    <mat-header-cell *matHeaderCellDef>IMG / TXT</mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <p>{{element.data.isIMG ? 'Image' : 'Text'}}</p>
-    </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef='text'>
-    <mat-header-cell *matHeaderCellDef>Question Text</mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <p>{{element.data.questionText}}</p>
-    </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef='unit'>
-    <mat-header-cell *matHeaderCellDef>Unit</mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <p>{{element.data.unit}}</p>
-    </mat-cell>
-  </ng-container>
-  <ng-container matColumnDef='standards'>
-    <mat-header-cell *matHeaderCellDef>Standards</mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <p>{{element.data.standards ? element.data.standards.join(",") : ''}}</p>
-    </mat-cell>
-  </ng-container>
+      <mat-header-row *matHeaderRowDef="['MC','IMG','text','unit','standards']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['MC','IMG','text','unit','standards'];" (click)="edit(row)"></mat-row>
+    </mat-table>
+    <button *ngIf="questions && !hidePreview" mat-fab color="primary" (click)="addQuestion()" style="position: fixed; right: 10px; bottom: 10px;">+</button>
+  </mat-tab>
 
-  <mat-header-row *matHeaderRowDef="['MC','IMG','text','unit','standards']"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: ['MC','IMG','text','unit','standards'];" (click)="edit(row)"></mat-row>
-</mat-table>
-<button *ngIf="questions && !hidePreview" mat-fab color="primary" (click)="addQuestion()" style="position: fixed; right: 10px; bottom: 10px;">+</button>
+  <mat-tab label="Students">
+    <app-student-uploader [examPath]="currentExam"></app-student-uploader>
+    <mat-table [dataSource]="students" class="mat-elevation-z8">
+      <ng-container matColumnDef="Name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <p>{{element.data.NAME}}</p><br>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="DBN">
+        <mat-header-cell *matHeaderCellDef>DBN</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <p>{{element.data.DBN}}</p>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef='StudentID'>
+        <mat-header-cell *matHeaderCellDef>Student ID</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <p>{{element.data.STUDENT_ID}}</p>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef='Grade'>
+        <mat-header-cell *matHeaderCellDef>Grade</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <p>{{element.data.LVL}}</p>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="['Name','DBN','StudentID','Grade']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['Name','DBN','StudentID','Grade'];"></mat-row>
+    </mat-table>
+  </mat-tab>
+  <mat-tab label="Analysis">
+
+  </mat-tab>
+</mat-tab-group>

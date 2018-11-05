@@ -8,6 +8,6 @@ export interface Student {
     NAME: string;
     NYS_STUDENT_ID: number;
     STUDENT_ID: string;
-    EXAMS: string[];
+    EXAMS: any;
     GRADES: {};
 }

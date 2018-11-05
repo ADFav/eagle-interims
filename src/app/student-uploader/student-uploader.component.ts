@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Student } from 'src/app/models/student';
+import { Exam } from 'src/app/models/exam';
+import { FirestoreReference } from '../models/firestore-reference';
 
 
 @Component({
@@ -10,15 +12,15 @@ import { Student } from 'src/app/models/student';
 })
 export class StudentUploaderComponent {
 
-  @Input() exam;
+  @Input() examPath: string;
   constructor(private afs: AngularFirestore) { }
 
   uploadCSV(evt) {
     const reader = new FileReader();
     reader.readAsText(evt.target.files[0]);
-    // reader.onload = (event: Event) => {
-    //   this.extractData(event.target.result)
-    // }
+    reader.onload = (event: any) => {
+      this.extractData(event.target.result)
+    }
   }
 
   extractData(data) {
@@ -27,11 +29,25 @@ export class StudentUploaderComponent {
     const headers = allLines.splice(0, 1)[0].map((header: string) => header.replace(/\s/g, '_').replace('#', 'NUM'));
 
     let studentData: Student[] = allLines
-      .map(line => line.reduce(this.convertLineToObject(headers),{}))
+      .map(line => line.reduce(this.convertLineToObject(headers), {}))
 
     console.log(studentData);
-    studentData
-      .forEach((student: Student) => this.afs.collection<Student>('students').doc(String(student['STUDENT_ID'])).set(student));
+    const examID = this.examPath.split("/")[1];
+    const students = this.afs.collection<Student>('students');
+    studentData.forEach((student: Student) => {
+      const studentID = String(student['STUDENT_ID'])
+      students.doc(studentID).ref.get().then(snapshot => {
+        if (snapshot.exists) {
+          const partialStudentUpdate = {};
+          partialStudentUpdate[`EXAMS.${examID}`] = true;
+          snapshot.ref.update(partialStudentUpdate)
+        } else {
+          student.EXAMS = {}
+          student.EXAMS[examID] = true;
+          snapshot.ref.set(student);
+        }
+      })
+    });
   }
 
   convertLineToObject(headers: string[]) {

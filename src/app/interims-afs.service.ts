@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, QueryFn } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, QueryFn, Query, CollectionReference } from 'angularfire2/firestore';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -15,6 +15,7 @@ import { User } from 'src/app/models/user';
   providedIn: 'root'
 })
 export class InterimsAFSService {
+  
   exams: Observable<FirestoreReference<Exam>[]>;
   questions: Subject<FirestoreReference<Question>[]>;
   students: Subject<FirestoreReference<Student>[]>;
@@ -56,6 +57,12 @@ export class InterimsAFSService {
 
   getQuestions(examPath: string) {
     this.createReferences<Question>(this.afs.doc(examPath).collection<Question>("questions")).subscribe(this.questions)
+  }
+
+  getStudents(examPath: string){
+    const examID = examPath.split("/")[1];
+    const query: QueryFn = (ref: CollectionReference) => ref.where(`EXAMS.${examID}`,"==",true);
+    this.createReferences<Student>(this.afs.collection<Student>("students",query)).subscribe(this.students);
   }
 
   getTestTakers(examPath: string) {
@@ -113,4 +120,6 @@ export class InterimsAFSService {
   addExam(exam: Exam) {
     return this.afs.collection("exams").add(Object.assign({},exam));
   }
+
+
 }

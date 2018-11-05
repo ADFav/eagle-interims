@@ -3,6 +3,7 @@ import { ExamEditorService } from './exam-editor.service';
 import { LoggerService } from '../logger.service';
 import { Question } from 'src/app/models/question';
 import { FirestoreReference } from 'src/app/models/firestore-reference';
+import { Student } from '../models/student';
 
 @Component({
   selector: 'app-exam-editor',
@@ -11,6 +12,7 @@ import { FirestoreReference } from 'src/app/models/firestore-reference';
 })
 export class ExamEditorComponent implements OnInit {
   questions: FirestoreReference<Question>[];
+  students: FirestoreReference<Student>[];
   hidePreview: boolean;
   newQuestion: FirestoreReference<Question>;
   currentExam: string;
@@ -25,7 +27,11 @@ export class ExamEditorComponent implements OnInit {
     this.hidePreview = false;
     this.editor.questions.subscribe(questions => {
       this.logger.log("Questions coming into component: ", questions);
-      this.questions = questions
+      this.questions = questions;
+    });
+    this.editor.students.subscribe(students => {
+      this.logger.log("Students coming into component: ", students);
+      this.students = students;
     });
   }
 
